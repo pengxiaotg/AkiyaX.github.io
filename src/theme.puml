@@ -1,0 +1,8 @@
+ skinparam class {
+    BackgroundColor Azure
+    ArrowColor SteelBlue
+    BorderColor SteelBlue
+}
+
+skinparam ArrowFontColor DarkGray
+skinparam PackageBackgroundColor Gainsboro
