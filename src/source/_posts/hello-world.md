@@ -183,3 +183,111 @@ nav:
     "className": "Comment"
 }
 ```
+
+## UML
+
+
+{% plantuml %}
+interface ListIterator
+interface Iterator
+interface Collection
+interface List
+interface Set
+interface Map
+interface Map.Entry
+interface Queue
+interface Deque
+abstract class AbstractCollection{
+    {abstract} +int size()
+    {abstract} +Iterator<E> iterator()
+}
+abstract class AbstractList{
+    +Iterator<E> iterator()
+
+}
+abstract class AbstractSet
+abstract class AbstractMap{
+    {abstract} +Set<Entry<K,V>> entrySet()
+}
+abstract class AbstractSequentialList
+abstract class Dictionary
+class ArrayList
+class Vector
+class LinkedList
+class HashSet
+class Hashtable
+class HashMap
+class LinkedHashMap
+
+Iterator <|-- ListIterator
+Iterator <|-- Collection
+Collection <|-- List
+Collection <|-- Set
+Collection <|.. AbstractCollection
+Collection <|-- Queue
+Queue <|-- Deque
+Deque <|.. ArrayList
+List <|.. AbstractList
+List <|.. Vector
+List <|.. LinkedList
+Set <|.. AbstractSet
+Set <|.. HashSet
+Map <|.. AbstractMap
+Map <|.. Hashtable
+Map <|.. HashMap
+Map <|.. LinkedHashMap
+AbstractCollection <|-- AbstractList
+AbstractCollection <|-- AbstractSet
+AbstractList <|-- ArrayList
+AbstractList <|-- Vector
+AbstractList <|-- AbstractSequentialList
+AbstractSet <|-- HashSet
+AbstractSequentialList <|-- LinkedList
+AbstractMap <|-- HashMap
+Dictionary <|-- Hashtable
+HashMap <|-- LinkedHashMap
+
+note as N1 #green
+AbstractCollection--iterator作为数据源
+AbstractList--实现好的iterator作为数据源
+ArrayList--数组是数据操作的对象
+end note
+
+note right of ArrayList:批量操作变为数组操作
+{% endplantuml %}
+
+{% plantuml %}
+class Impl
+interface Interface
+
+Interface <|.. Impl:实现
+
+class Dep1
+class Dep2
+Dep2 <.. Dep1:依赖
+
+class Ass1
+class Ass2
+Ass2 <-- Ass1:单向依赖
+
+class Ass3
+class Ass4
+Ass4 -- Ass3:双向依赖
+
+class Ass5
+class Ass6
+Ass6 "1..*"<--"0..1" Ass5:多重行依赖
+
+class Agg1
+class Agg2
+Agg2 o-- Agg1:聚合
+
+class Com1
+class Com2
+Com2 *-- Com1:组合
+
+class Parent
+class Sub
+Parent <|-- Sub:继承
+
+{% endplantuml %}
