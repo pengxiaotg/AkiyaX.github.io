@@ -16,7 +16,7 @@
 
 
 
-<title>我的新博客 | 青龙指引你</title>
+<title>C#设计模式[3] - 抽象工厂模式 | 青龙指引你</title>
 
 
 
@@ -177,11 +177,75 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">▶︎ 展开目录</a>
+    </div>
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a onclick="go_top()">△ 顶部</a>
+        <a onclick="go_bottom()">▽ 底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "▼ 收起目录"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "▶︎ 展开目录"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">我的新博客</h1>
+            <h1 class="post-title">C#设计模式[3] - 抽象工厂模式</h1>
             
                 <div class="post-meta">
                     
@@ -194,7 +258,7 @@
                         <span class="post-time">
                         <!--发布时间:-->
                         <i class="iconfont icon-time"></i>
-                        <a href="#">2020-01-13&nbsp;&nbsp;23:01:33</a> &nbsp;
+                        <a href="#">2020-03-21&nbsp;&nbsp;22:07:19</a> &nbsp;
                         </span>
                     
                     
@@ -202,12 +266,12 @@
                         <!--分类:-->
                         <i class="iconfont icon-category"></i>
                             
-                                <a href="/categories/%E8%AE%B0%E5%BD%95/">记录</a>&nbsp;
+                                <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>&nbsp;
                             
                         </span>
                     
                     
-                    <span id="/my-new-blog/" class="leancloud-visitors view" data-flag-title="我的新博客">
+                    <span id="/abstract-fatory-pattern/" class="leancloud-visitors view" data-flag-title="C#设计模式[3] - 抽象工厂模式">
                         <text class="post-meta-item-text">
                             <!--阅读数:-->
                             <i class="iconfont icon-view"></i>
@@ -221,30 +285,11 @@
         </header>
 
         <div class="post-content">
-            <p>感谢CSDN多年的陪伴❤️，为了更好的阅读体验，我还是决定搞一个自己的博客，<code>github page</code> + <code>hexo</code>搭建起来真的是非常迅速，<code>Chic</code>主题也很漂亮。</p>
-<p>但是事情总是不那么简单，还是得自己动手才能做成自己心目中的那样啊，呐。</p>
-<p>TodoList：</p>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> 中文化</li>
-<li><input checked="" disabled="" type="checkbox"> 中文URL优化</li>
-<li><input checked="" disabled="" type="checkbox"> 评论</li>
-<li><input checked="" disabled="" type="checkbox"> 评论回复邮件提醒</li>
-<li><input checked="" disabled="" type="checkbox"> 评论样式适配（dark mode只能将就看吧，改不动了）</li>
-<li><input checked="" disabled="" type="checkbox"> 部分文字改为icon</li>
-<li><input checked="" disabled="" type="checkbox"> 代码高亮修改</li>
-<li><input checked="" disabled="" type="checkbox"> 统计访问量</li>
-<li><input checked="" disabled="" type="checkbox"> 加入网易云和steam的链接</li>
-<li><input checked="" disabled="" type="checkbox"> 自定plantuml皮肤 </li>
-<li><input disabled="" type="checkbox"> 网站icon（委托给某人做，一直🕊）</li>
-<li><input disabled="" type="checkbox"> 加入检索功能(主题不支持，暂时不做)</li>
-</ul>
-<p>相关链接：</p>
-<ul>
-<li>原博客地址：<a href="https://blog.csdn.net/xp731574722" target="_blank" rel="noopener">CSDN</a></li>
-<li>访问量统计：<a href="https://valine.js.org/" target="_blank" rel="noopener">Valine</a></li>
-<li>评论&amp;邮件提醒：<a href="https://github.com/DesertsP/Valine-Admin" target="_blank" rel="noopener">Valine-Admin</a></li>
-</ul>
-
+            <p>🚀<a href="https://akiyax.github.io/csharp-design-pattern/">24个C#设计模式目录</a> &nbsp;&nbsp; 🍺<a href="https://github.com/AkiyaX/CSharpDesignPattern" target="_blank" rel="noopener">源码地址</a></p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>使用频率：★★★★★</p>
+<h1 id="结构与实现"><a href="#结构与实现" class="headerlink" title="结构与实现"></a>结构与实现</h1><h1 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h1><p>优点：</p>
+<p>缺点：</p>
+<h1 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h1>
         </div>
 
         
@@ -258,7 +303,7 @@
                 
                     <p class="copyright-item">
                         <span>本文链接:</span>
-                        <span><a href="https://akiyax.github.io/my-new-blog/">https://akiyax.github.io/my-new-blog/</a></span>
+                        <span><a href="https://akiyax.github.io/abstract-fatory-pattern/">https://akiyax.github.io/abstract-fatory-pattern/</a></span>
                     </p>
                 
                 
@@ -277,9 +322,9 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%8A%98%E8%85%BE/">
+                        <a href="/tags/NET/">
                             <i class="iconfont icon-tag1"></i>
-                            折腾
+                            .NET
                         </a>
                     
                         
@@ -301,10 +346,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/new-features-in-csharp/">C# 各版本新功能列表</a>
             
-            
-            <a class="next" rel="next" href="/hello-world/">Hello World</a>
+            <a class="next" rel="next" href="/factory-method-pattern/">C#设计模式[2] - 工厂方法模式</a>
             
         </section>
         <br>
