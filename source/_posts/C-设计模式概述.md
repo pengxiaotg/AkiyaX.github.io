@@ -32,7 +32,7 @@ id: csharp-design-pattern
 
 [**工厂方法模式**](https://akiyax.github.io/factory-method-pattern/)（Factory Method Pattern）：定义一个用于创建对象的接口，但是让子类决定将哪一个类实例化。工厂方法模式让一个类的实例化延迟到子类。
 
-**抽象工厂模式**（Abstract Fatory Pattern）:提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。
+[**抽象工厂模式**](https://akiyax.github.io/abstract-fatory-pattern/)（Abstract Fatory Pattern）:提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。
 
 **建造者模式**（Builder Pattern）：将一个复杂对象的构建与它的表示分离，使得同样的构造过程可以创建不同的表示。
 
