@@ -735,7 +735,7 @@ header label {
   color: #fff;
 }
 .post-content {
-  padding-top: 2rem;
+  padding-top: 0.8em;
   text-align: justify;
 }
 .post-content h2,
@@ -912,7 +912,7 @@ header label {
   text-align: right;
 }
 .post-copyright {
-  margin-top: 5rem;
+  margin-top: 3rem;
   border-top: 1px solid #e8e8e8;
   border-bottom: 1px solid #e8e8e8;
 }
