@@ -2,7 +2,7 @@
 title: {{ title }}
 date: {{ date }}
 category: 设计模式
-tags: .NET
+tags: .net
 id: 
 ---
 

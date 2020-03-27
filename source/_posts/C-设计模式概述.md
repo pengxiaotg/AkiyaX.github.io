@@ -2,7 +2,7 @@
 title: 'C# 设计模式导览'
 date: 2020-03-14 02:20:58
 category: 设计模式
-tags: .NET
+tags: .net
 id: csharp-design-pattern
 ---
 

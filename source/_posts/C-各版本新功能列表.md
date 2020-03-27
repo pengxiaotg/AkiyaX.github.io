@@ -1,7 +1,7 @@
 ---
 title: 'C# 各版本新功能列表'
 date: 2020-02-21 11:36:28
-tags: .NET
+tags: .net
 id: new-features-in-csharp
 category: 技术汇总
 ---
