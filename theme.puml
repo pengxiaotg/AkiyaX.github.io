@@ -4,5 +4,11 @@
     BorderColor SteelBlue
 }
 
+skinparam Note{
+    BackgroundColor Teal
+    BorderColor Teal
+    FontColor White
+}
+
 skinparam ArrowFontColor DarkGray
 skinparam PackageBackgroundColor Gainsboro
