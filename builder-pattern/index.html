@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Akiya Xiao">
+
+
+    <meta name="subtitle" content="Akiya Xiao's blog">
+
+
+    <meta name="description" content="Do one thing and do well !">
+
+
+
+<title>C#设计模式[4] - 建造者模式 | 青龙指引你</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1614813_fp9wxdcpr9c.css"
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Akiya&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">
+                        
+                            <i class="iconfont icon-archives "></i>
+                        
+                        
+                        
+                        
+                        文章
+                    </a>
+                
+                    <a class="menu-item" href="/category">
+                        
+                        
+                            <i class="iconfont icon-categorys "></i>
+                        
+                        
+                        
+                        分类
+                    </a>
+                
+                    <a class="menu-item" href="/tag">
+                        
+                        
+                        
+                            <i class="iconfont icon-tags "></i>
+                        
+                        
+                        标签
+                    </a>
+                
+                    <a class="menu-item" href="/about">
+                        
+                        
+                        
+                        
+                            <i class="iconfont icon-about "></i>
+                        
+                        关于
+                    </a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Akiya&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">
+                        
+                            <i class="iconfont icon-archives "></i>
+                        
+                        
+                        
+                        
+                        文章
+                    </a>
+                
+                    <a class="menu-item" href="/category">
+                        
+                        
+                            <i class="iconfont icon-categorys "></i>
+                        
+                        
+                        
+                        分类
+                    </a>
+                
+                    <a class="menu-item" href="/tag">
+                        
+                        
+                        
+                            <i class="iconfont icon-tags "></i>
+                        
+                        
+                        标签
+                    </a>
+                
+                    <a class="menu-item" href="/about">
+                        
+                        
+                        
+                        
+                            <i class="iconfont icon-about "></i>
+                        
+                        关于
+                    </a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">▶︎ 展开目录</a>
+    </div>
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a onclick="go_top()">△ 顶部</a>
+        <a onclick="go_bottom()">▽ 底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "▼ 收起目录"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "▶︎ 展开目录"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">C#设计模式[4] - 建造者模式</h1>
+            
+                <div class="post-meta">
+                    
+                        <!--作者:-->
+                        <i class="iconfont icon-user"></i>
+                        <a itemprop="author" rel="author" href="/">Akiya Xiao </a> &nbsp;
+                    
+
+                    
+                        <span class="post-time">
+                        <!--发布时间:-->
+                        <i class="iconfont icon-time"></i>
+                        <a href="#">2020-03-27&nbsp;&nbsp;17:23:45</a> &nbsp;
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        <!--分类:-->
+                        <i class="iconfont icon-category"></i>
+                            
+                                <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>&nbsp;
+                            
+                        </span>
+                    
+                    
+                    <span id="/builder-pattern/" class="leancloud-visitors view" data-flag-title="C#设计模式[4] - 建造者模式">
+                        <text class="post-meta-item-text">
+                            <!--阅读数:-->
+                            <i class="iconfont icon-view"></i>
+                        </text>
+                        
+                        <text class="leancloud-visitors-count">加载中</text>
+                      </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>🚀<a href="https://akiyax.github.io/csharp-design-pattern/">24个C#设计模式目录</a> &nbsp;&nbsp; 🍺<a href="https://github.com/AkiyaX/CSharpDesignPattern" target="_blank" rel="noopener">源码地址</a></p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>对于今天大部分的的手机📱厂商而言，📱的制造需要各个供应商提供零部件，然后再按照自己的设计组装完成。</p>
+<p>以 一加7T 这台机型举例：</p>
+<table>
+<thead>
+<tr>
+<th>部件</th>
+<th>供应商</th>
+<th>产品</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SOC</td>
+<td>高通</td>
+<td>骁龙 855 Plus</td>
+</tr>
+<tr>
+<td>屏幕</td>
+<td>三星</td>
+<td>6.55英寸的90 Hz流体屏幕</td>
+</tr>
+<tr>
+<td>主摄镜头</td>
+<td>索尼</td>
+<td>4800万像素的IMX 586</td>
+</tr>
+<tr>
+<td>电池</td>
+<td>欣旺达电子</td>
+<td>3800 mAh锂电池</td>
+</tr>
+</tbody></table>
+<p>对于一加来说，并不需要知道这些零部件的生产过程，而是关注如何将零部件构建成📱的过程，最终生产出一部完整的📱产品。对于用户来说，不需要关注📱如何一步步生产出来，只需要指定机型，就可以购买手机产品。</p>
+<blockquote>
+<p><strong>建造者模式</strong>：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+</blockquote>
+<p>建造者模式将客户端与包含多个部件的复杂对象的创建过程分离，即使在相同的流水线，更换零部件就可以生产出不同的产品。客户端无须知道复杂对象的内部组成部分与装配方式，只需知道所建造者的类型即可。</p>
+<p>使用频率：★★★☆☆</p>
+<h1 id="结构与实现"><a href="#结构与实现" class="headerlink" title="结构与实现"></a>结构与实现</h1><p>在建造者模式中，包含4个角色：</p>
+<ul>
+<li>Builder（抽象建造者）</li>
+<li>ConcreteBuilder（具体建造者）</li>
+<li>Product（产品）</li>
+<li>Director（指挥者）</li>
+</ul>
+<p>在抽象建造者<code>Builder</code>中，有两类方法，一类是<code>BuildPartX()</code>用于构建各个部件，另一类方法是<code>GetResult()</code>用于获取创建好的复杂对象。<code>Builder</code>既可以做接口，也可做抽象类，实现部分方法，比如<code>GetResult()</code>。</p>
+<p>指挥者<code>Director</code>负责安排复杂对象的建造次序，客户端一般只需要与指挥者交互。</p>
+<img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iNTQxcHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo1ODdweDtoZWlnaHQ6NTQxcHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1ODcgNTQxIiB3aWR0aD0iNTg3cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjFoYzJ2OGdzam56OTciIHdpZHRoPSIzMDAlIiB4PSItMSIgeT0iLTEiPjxmZUdhdXNzaWFuQmx1ciByZXN1bHQ9ImJsdXJPdXQiIHN0ZERldmlhdGlvbj0iMi4wIi8+PGZlQ29sb3JNYXRyaXggaW49ImJsdXJPdXQiIHJlc3VsdD0iYmx1ck91dDIiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuNCAwIi8+PGZlT2Zmc2V0IGR4PSI0LjAiIGR5PSI0LjAiIGluPSJibHVyT3V0MiIgcmVzdWx0PSJibHVyT3V0MyIvPjxmZUJsZW5kIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImJsdXJPdXQzIiBtb2RlPSJub3JtYWwiLz48L2ZpbHRlcj48L2RlZnM+PGc+PCEtLU1ENT1bZmM0MTEyMGQzZTIzNWJjY2EzZWFiN2MwM2JjNmIwZjVdCmNsdXN0ZXIgQ29uY3JldGVCdWlsZGVyLS0+PHBvbHlnb24gZmlsbD0iI0RDRENEQyIgZmlsdGVyPSJ1cmwoI2YxaGMydjhnc2puejk3KSIgcG9pbnRzPSIyMTQsMzY2LDM0OCwzNjYsMzU1LDM4OC4yOTY5LDU2NCwzODguMjk2OSw1NjQsNTI5LDIxNCw1MjksMjE0LDM2NiIgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTogIzAwMDAwMDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMjE0IiB4Mj0iMzU1IiB5MT0iMzg4LjI5NjkiIHkyPSIzODguMjk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMjgiIHg9IjIxOCIgeT0iMzgwLjk5NTEiPkNvbmNyZXRlQnVpbGRlcjwvdGV4dD48IS0tTUQ1PVs4NGZmYzg3YTgxMDMzODM4ZTlmMzUwYTYyMDhmMTFhY10KY2xhc3MgT25lUGx1czZUQnVpbGRlci0tPjxyZWN0IGZpbGw9IiNGMEZGRkYiIGZpbHRlcj0idXJsKCNmMWhjMnY4Z3Nqbno5NykiIGhlaWdodD0iMTEyLjAyMzQiIGlkPSJPbmVQbHVzNlRCdWlsZGVyIiBzdHlsZT0ic3Ryb2tlOiAjNDY4MkI0OyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSIxNDEiIHg9IjIzMC41IiB5PSI0MDEiLz48ZWxsaXBzZSBjeD0iMjQ1LjUiIGN5PSI0MTciIGZpbGw9IiNBREQxQjIiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiAjNDY4MkI0OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cGF0aCBkPSJNMjQ3Ljg0MzgsNDEyLjY3MTkgTDI0OC4wMTU2LDQxMi43NSBDMjQ4LjIzNDQsNDEyLjQzNzUgMjQ4LjQzNzUsNDEyLjM0MzggMjQ4LjczNDQsNDEyLjM0MzggQzI0OS4wMzEzLDQxMi4zNDM4IDI0OS4zMTI1LDQxMi40ODQ0IDI0OS40Njg4LDQxMi43NSBDMjQ5LjU2MjUsNDEyLjkwNjMgMjQ5LjU3ODEsNDEzLjAzMTMgMjQ5LjU3ODEsNDEzLjQ2ODggTDI0OS41NzgxLDQxNC44OTA2IEMyNDkuNTc4MSw0MTUuMzEyNSAyNDkuNTQ2OSw0MTUuNSAyNDkuNDM3NSw0MTUuNjU2MyBDMjQ5LjI2NTYsNDE1Ljg3NSAyNDksNDE2LjAxNTYgMjQ4LjczNDQsNDE2LjAxNTYgQzI0OC41MTU2LDQxNi4wMTU2IDI0OC4yODEzLDQxNS45MDYzIDI0OC4xNDA2LDQxNS43NjU2IEMyNDgsNDE1LjY0MDYgMjQ3Ljk2ODgsNDE1LjUxNTYgMjQ3LjkwNjMsNDE1LjEwOTQgQzI0Ny44MTI1LDQxNC43MDMxIDI0Ny42NDA2LDQxNC40ODQ0IDI0Ny4xNTYzLDQxNC4yMDMxIEMyNDYuNjg3NSw0MTMuOTUzMSAyNDYuMDc4MSw0MTMuNzk2OSAyNDUuNSw0MTMuNzk2OSBDMjQzLjc2NTYsNDEzLjc5NjkgMjQyLjUxNTYsNDE1LjEwOTQgMjQyLjUxNTYsNDE2Ljg5MDYgTDI0Mi41MTU2LDQxNy45ODQ0IEMyNDIuNTE1Niw0MTkuNjg3NSAyNDMuODEyNSw0MjAuNzgxMyAyNDUuODU5NCw0MjAuNzgxMyBDMjQ2LjYyNSw0MjAuNzgxMyAyNDcuMzEyNSw0MjAuNjU2MyAyNDcuNzM0NCw0MjAuMzkwNiBDMjQ3LjkyMTksNDIwLjI5NjkgMjQ3LjkyMTksNDIwLjI5NjkgMjQ4LjM3NSw0MTkuODEyNSBDMjQ4LjU2MjUsNDE5LjYyNSAyNDguNzY1Niw0MTkuNTQ2OSAyNDguOTg0NCw0MTkuNTQ2OSBDMjQ5LjQ1MzEsNDE5LjU0NjkgMjQ5Ljg0MzgsNDE5LjkzNzUgMjQ5Ljg0MzgsNDIwLjM5MDYgQzI0OS44NDM4LDQyMC43ODEzIDI0OS41MTU2LDQyMS4yMzQ0IDI0OC45Mzc1LDQyMS42NDA2IEMyNDguMTg3NSw0MjIuMTg3NSAyNDcuMDMxMyw0MjIuNDg0NCAyNDUuODEyNSw0MjIuNDg0NCBDMjQyLjkyMTksNDIyLjQ4NDQgMjQwLjgxMjUsNDIwLjU5MzggMjQwLjgxMjUsNDE4LjAxNTYgTDI0MC44MTI1LDQxNi44OTA2IEMyNDAuODEyNSw0MTQuMTcxOSAyNDIuODEyNSw0MTIuMDkzOCAyNDUuNDM3NSw0MTIuMDkzOCBDMjQ2LjMxMjUsNDEyLjA5MzggMjQ2LjkwNjMsNDEyLjIzNDQgMjQ3Ljg0MzgsNDEyLjY3MTkgWiAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMDkiIHg9IjI1OS41IiB5PSI0MjEuMTU0MyI+T25lUGx1czZUQnVpbGRlcjwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiAjNDY4MkI0OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIyMzEuNSIgeDI9IjM3MC41IiB5MT0iNDMzIiB5Mj0iNDMzIi8+PGxpbmUgc3R5bGU9InN0cm9rZTogIzQ2ODJCNDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMjMxLjUiIHgyPSIzNzAuNSIgeTE9IjQ0MSIgeTI9IjQ0MSIvPjxlbGxpcHNlIGN4PSIyNDEuNSIgY3k9IjQ1MiIgZmlsbD0iIzg0QkU4NCIgcng9IjMiIHJ5PSIzIiBzdHlsZT0ic3Ryb2tlOiAjMDM4MDQ4OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMDAiIHg9IjI1MC41IiB5PSI0NTUuMjEwNCI+dm9pZCBCdWlsZE5hbWUoKTs8L3RleHQ+PGVsbGlwc2UgY3g9IjI0MS41IiBjeT0iNDY0LjgwNDciIGZpbGw9IiM4NEJFODQiIHJ4PSIzIiByeT0iMyIgc3R5bGU9InN0cm9rZTogIzAzODA0ODsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iOTIiIHg9IjI1MC41IiB5PSI0NjguMDE1MSI+dm9pZCBCdWlsZFNPQygpOzwvdGV4dD48ZWxsaXBzZSBjeD0iMjQxLjUiIGN5PSI0NzcuNjA5NCIgZmlsbD0iIzg0QkU4NCIgcng9IjMiIHJ5PSIzIiBzdHlsZT0ic3Ryb2tlOiAjMDM4MDQ4OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMDciIHg9IjI1MC41IiB5PSI0ODAuODE5OCI+dm9pZCBCdWlsZFNjcmVlbigpOzwvdGV4dD48ZWxsaXBzZSBjeD0iMjQxLjUiIGN5PSI0OTAuNDE0MSIgZmlsbD0iIzg0QkU4NCIgcng9IjMiIHJ5PSIzIiBzdHlsZT0ic3Ryb2tlOiAjMDM4MDQ4OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMTIiIHg9IjI1MC41IiB5PSI0OTMuNjI0NSI+dm9pZCBCdWlsZENhbWVyYSgpOzwvdGV4dD48ZWxsaXBzZSBjeD0iMjQxLjUiIGN5PSI1MDMuMjE4OCIgZmlsbD0iIzg0QkU4NCIgcng9IjMiIHJ5PSIzIiBzdHlsZT0ic3Ryb2tlOiAjMDM4MDQ4OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMDgiIHg9IjI1MC41IiB5PSI1MDYuNDI5MiI+dm9pZCBCdWlsZEJhdHRlcnkoKTs8L3RleHQ+PCEtLU1ENT1bM2I5ZGY0YWUzYWUzZGNjN2NkMzQzYWVmNWI5NTU4YWJdCmNsYXNzIE9uZVBsdXM3VEJ1aWxkZXItLT48cmVjdCBmaWxsPSIjRjBGRkZGIiBmaWx0ZXI9InVybCgjZjFoYzJ2OGdzam56OTcpIiBoZWlnaHQ9IjExMi4wMjM0IiBpZD0iT25lUGx1czdUQnVpbGRlciIgc3R5bGU9InN0cm9rZTogIzQ2ODJCNDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTQxIiB4PSI0MDYuNSIgeT0iNDAxIi8+PGVsbGlwc2UgY3g9IjQyMS41IiBjeT0iNDE3IiBmaWxsPSIjQUREMUIyIiByeD0iMTEiIHJ5PSIxMSIgc3R5bGU9InN0cm9rZTogIzQ2ODJCNDsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHBhdGggZD0iTTQyMy44NDM4LDQxMi42NzE5IEw0MjQuMDE1Niw0MTIuNzUgQzQyNC4yMzQ0LDQxMi40Mzc1IDQyNC40Mzc1LDQxMi4zNDM4IDQyNC43MzQ0LDQxMi4zNDM4IEM0MjUuMDMxMyw0MTIuMzQzOCA0MjUuMzEyNSw0MTIuNDg0NCA0MjUuNDY4OCw0MTIuNzUgQzQyNS41NjI1LDQxMi45MDYzIDQyNS41NzgxLDQxMy4wMzEzIDQyNS41NzgxLDQxMy40Njg4IEw0MjUuNTc4MSw0MTQuODkwNiBDNDI1LjU3ODEsNDE1LjMxMjUgNDI1LjU0NjksNDE1LjUgNDI1LjQzNzUsNDE1LjY1NjMgQzQyNS4yNjU2LDQxNS44NzUgNDI1LDQxNi4wMTU2IDQyNC43MzQ0LDQxNi4wMTU2IEM0MjQuNTE1Niw0MTYuMDE1NiA0MjQuMjgxMyw0MTUuOTA2MyA0MjQuMTQwNiw0MTUuNzY1NiBDNDI0LDQxNS42NDA2IDQyMy45Njg4LDQxNS41MTU2IDQyMy45MDYzLDQxNS4xMDk0IEM0MjMuODEyNSw0MTQuNzAzMSA0MjMuNjQwNiw0MTQuNDg0NCA0MjMuMTU2Myw0MTQuMjAzMSBDNDIyLjY4NzUsNDEzLjk1MzEgNDIyLjA3ODEsNDEzLjc5NjkgNDIxLjUsNDEzLjc5NjkgQzQxOS43NjU2LDQxMy43OTY5IDQxOC41MTU2LDQxNS4xMDk0IDQxOC41MTU2LDQxNi44OTA2IEw0MTguNTE1Niw0MTcuOTg0NCBDNDE4LjUxNTYsNDE5LjY4NzUgNDE5LjgxMjUsNDIwLjc4MTMgNDIxLjg1OTQsNDIwLjc4MTMgQzQyMi42MjUsNDIwLjc4MTMgNDIzLjMxMjUsNDIwLjY1NjMgNDIzLjczNDQsNDIwLjM5MDYgQzQyMy45MjE5LDQyMC4yOTY5IDQyMy45MjE5LDQyMC4yOTY5IDQyNC4zNzUsNDE5LjgxMjUgQzQyNC41NjI1LDQxOS42MjUgNDI0Ljc2NTYsNDE5LjU0NjkgNDI0Ljk4NDQsNDE5LjU0NjkgQzQyNS40NTMxLDQxOS41NDY5IDQyNS44NDM4LDQxOS45Mzc1IDQyNS44NDM4LDQyMC4zOTA2IEM0MjUuODQzOCw0MjAuNzgxMyA0MjUuNTE1Niw0MjEuMjM0NCA0MjQuOTM3NSw0MjEuNjQwNiBDNDI0LjE4NzUsNDIyLjE4NzUgNDIzLjAzMTMsNDIyLjQ4NDQgNDIxLjgxMjUsNDIyLjQ4NDQgQzQxOC45MjE5LDQyMi40ODQ0IDQxNi44MTI1LDQyMC41OTM4IDQxNi44MTI1LDQxOC4wMTU2IEw0MTYuODEyNSw0MTYuODkwNiBDNDE2LjgxMjUsNDE0LjE3MTkgNDE4LjgxMjUsNDEyLjA5MzggNDIxLjQzNzUsNDEyLjA5MzggQzQyMi4zMTI1LDQxMi4wOTM4IDQyMi45MDYzLDQxMi4yMzQ0IDQyMy44NDM4LDQxMi42NzE5IFogIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTA5IiB4PSI0MzUuNSIgeT0iNDIxLjE1NDMiPk9uZVBsdXM3VEJ1aWxkZXI8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTogIzQ2ODJCNDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iNDA3LjUiIHgyPSI1NDYuNSIgeTE9IjQzMyIgeTI9IjQzMyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjQwNy41IiB4Mj0iNTQ2LjUiIHkxPSI0NDEiIHkyPSI0NDEiLz48ZWxsaXBzZSBjeD0iNDE3LjUiIGN5PSI0NTIiIGZpbGw9IiM4NEJFODQiIHJ4PSIzIiByeT0iMyIgc3R5bGU9InN0cm9rZTogIzAzODA0ODsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTAwIiB4PSI0MjYuNSIgeT0iNDU1LjIxMDQiPnZvaWQgQnVpbGROYW1lKCk7PC90ZXh0PjxlbGxpcHNlIGN4PSI0MTcuNSIgY3k9IjQ2NC44MDQ3IiBmaWxsPSIjODRCRTg0IiByeD0iMyIgcnk9IjMiIHN0eWxlPSJzdHJva2U6ICMwMzgwNDg7IHN0cm9rZS13aWR0aDogMS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjkyIiB4PSI0MjYuNSIgeT0iNDY4LjAxNTEiPnZvaWQgQnVpbGRTT0MoKTs8L3RleHQ+PGVsbGlwc2UgY3g9IjQxNy41IiBjeT0iNDc3LjYwOTQiIGZpbGw9IiM4NEJFODQiIHJ4PSIzIiByeT0iMyIgc3R5bGU9InN0cm9rZTogIzAzODA0ODsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTA3IiB4PSI0MjYuNSIgeT0iNDgwLjgxOTgiPnZvaWQgQnVpbGRTY3JlZW4oKTs8L3RleHQ+PGVsbGlwc2UgY3g9IjQxNy41IiBjeT0iNDkwLjQxNDEiIGZpbGw9IiM4NEJFODQiIHJ4PSIzIiByeT0iMyIgc3R5bGU9InN0cm9rZTogIzAzODA0ODsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTEyIiB4PSI0MjYuNSIgeT0iNDkzLjYyNDUiPnZvaWQgQnVpbGRDYW1lcmEoKTs8L3RleHQ+PGVsbGlwc2UgY3g9IjQxNy41IiBjeT0iNTAzLjIxODgiIGZpbGw9IiM4NEJFODQiIHJ4PSIzIiByeT0iMyIgc3R5bGU9InN0cm9rZTogIzAzODA0ODsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTA4IiB4PSI0MjYuNSIgeT0iNTA2LjQyOTIiPnZvaWQgQnVpbGRCYXR0ZXJ5KCk7PC90ZXh0PjwhLS1NRDU9WzAzYmU1NWZiNGFhZTkxOTkwODgxOWU0MzJiOTY5NGVhXQpjbGFzcyBQaG9uZS0tPjxyZWN0IGZpbGw9IiNGMEZGRkYiIGZpbHRlcj0idXJsKCNmMWhjMnY4Z3Nqbno5NykiIGhlaWdodD0iMTEyLjAyMzQiIGlkPSJQaG9uZSIgc3R5bGU9InN0cm9rZTogIzQ2ODJCNDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTA4IiB4PSIzNTIiIHk9IjgiLz48ZWxsaXBzZSBjeD0iMzgzLjIiIGN5PSIyNCIgZmlsbD0iI0FERDFCMiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwYXRoIGQ9Ik0zODUuNTQzOCwxOS42NzE5IEwzODUuNzE1NiwxOS43NSBDMzg1LjkzNDQsMTkuNDM3NSAzODYuMTM3NSwxOS4zNDM4IDM4Ni40MzQ0LDE5LjM0MzggQzM4Ni43MzEzLDE5LjM0MzggMzg3LjAxMjUsMTkuNDg0NCAzODcuMTY4OCwxOS43NSBDMzg3LjI2MjUsMTkuOTA2MyAzODcuMjc4MSwyMC4wMzEzIDM4Ny4yNzgxLDIwLjQ2ODggTDM4Ny4yNzgxLDIxLjg5MDYgQzM4Ny4yNzgxLDIyLjMxMjUgMzg3LjI0NjksMjIuNSAzODcuMTM3NSwyMi42NTYzIEMzODYuOTY1NiwyMi44NzUgMzg2LjcsMjMuMDE1NiAzODYuNDM0NCwyMy4wMTU2IEMzODYuMjE1NiwyMy4wMTU2IDM4NS45ODEzLDIyLjkwNjMgMzg1Ljg0MDYsMjIuNzY1NiBDMzg1LjcsMjIuNjQwNiAzODUuNjY4OCwyMi41MTU2IDM4NS42MDYzLDIyLjEwOTQgQzM4NS41MTI1LDIxLjcwMzEgMzg1LjM0MDYsMjEuNDg0NCAzODQuODU2MywyMS4yMDMxIEMzODQuMzg3NSwyMC45NTMxIDM4My43NzgxLDIwLjc5NjkgMzgzLjIsMjAuNzk2OSBDMzgxLjQ2NTYsMjAuNzk2OSAzODAuMjE1NiwyMi4xMDk0IDM4MC4yMTU2LDIzLjg5MDYgTDM4MC4yMTU2LDI0Ljk4NDQgQzM4MC4yMTU2LDI2LjY4NzUgMzgxLjUxMjUsMjcuNzgxMyAzODMuNTU5NCwyNy43ODEzIEMzODQuMzI1LDI3Ljc4MTMgMzg1LjAxMjUsMjcuNjU2MyAzODUuNDM0NCwyNy4zOTA2IEMzODUuNjIxOSwyNy4yOTY5IDM4NS42MjE5LDI3LjI5NjkgMzg2LjA3NSwyNi44MTI1IEMzODYuMjYyNSwyNi42MjUgMzg2LjQ2NTYsMjYuNTQ2OSAzODYuNjg0NCwyNi41NDY5IEMzODcuMTUzMSwyNi41NDY5IDM4Ny41NDM4LDI2LjkzNzUgMzg3LjU0MzgsMjcuMzkwNiBDMzg3LjU0MzgsMjcuNzgxMyAzODcuMjE1NiwyOC4yMzQ0IDM4Ni42Mzc1LDI4LjY0MDYgQzM4NS44ODc1LDI5LjE4NzUgMzg0LjczMTMsMjkuNDg0NCAzODMuNTEyNSwyOS40ODQ0IEMzODAuNjIxOSwyOS40ODQ0IDM3OC41MTI1LDI3LjU5MzggMzc4LjUxMjUsMjUuMDE1NiBMMzc4LjUxMjUsMjMuODkwNiBDMzc4LjUxMjUsMjEuMTcxOSAzODAuNTEyNSwxOS4wOTM4IDM4My4xMzc1LDE5LjA5MzggQzM4NC4wMTI1LDE5LjA5MzggMzg0LjYwNjMsMTkuMjM0NCAzODUuNTQzOCwxOS42NzE5IFogIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNDAiIHg9IjQwMC44IiB5PSIyOC4xNTQzIj5QaG9uZTwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiAjNDY4MkI0OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIzNTMiIHgyPSI0NTkiIHkxPSI0MCIgeTI9IjQwIi8+PGVsbGlwc2UgY3g9IjM2MyIgY3k9IjUxIiBmaWxsPSJub25lIiByeD0iMyIgcnk9IjMiIHN0eWxlPSJzdHJva2U6ICMwMzgwNDg7IHN0cm9rZS13aWR0aDogMS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjcwIiB4PSIzNzIiIHk9IjU0LjIxMDQiPnN0cmluZyBOYW1lPC90ZXh0PjxlbGxpcHNlIGN4PSIzNjMiIGN5PSI2My44MDQ3IiBmaWxsPSJub25lIiByeD0iMyIgcnk9IjMiIHN0eWxlPSJzdHJva2U6ICMwMzgwNDg7IHN0cm9rZS13aWR0aDogMS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjYyIiB4PSIzNzIiIHk9IjY3LjAxNTEiPnN0cmluZyBTT0M8L3RleHQ+PGVsbGlwc2UgY3g9IjM2MyIgY3k9Ijc2LjYwOTQiIGZpbGw9Im5vbmUiIHJ4PSIzIiByeT0iMyIgc3R5bGU9InN0cm9rZTogIzAzODA0ODsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNzciIHg9IjM3MiIgeT0iNzkuODE5OCI+c3RyaW5nIFNjcmVlbjwvdGV4dD48ZWxsaXBzZSBjeD0iMzYzIiBjeT0iODkuNDE0MSIgZmlsbD0ibm9uZSIgcng9IjMiIHJ5PSIzIiBzdHlsZT0ic3Ryb2tlOiAjMDM4MDQ4OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI3OCIgeD0iMzcyIiB5PSI5Mi42MjQ1Ij5zdHJpbmcgQmF0dGVyeTwvdGV4dD48ZWxsaXBzZSBjeD0iMzYzIiBjeT0iMTAyLjIxODgiIGZpbGw9Im5vbmUiIHJ4PSIzIiByeT0iMyIgc3R5bGU9InN0cm9rZTogIzAzODA0ODsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iODIiIHg9IjM3MiIgeT0iMTA1LjQyOTIiPnN0cmluZyBDYW1lcmE8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTogIzQ2ODJCNDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB4MT0iMzUzIiB4Mj0iNDU5IiB5MT0iMTEyLjAyMzQiIHkyPSIxMTIuMDIzNCIvPjxwYXRoIGQ9Ik00OTUsNTEuNSBMNDk1LDYwIEw0NjAuMjUsNjQgTDQ5NSw2OCBMNDk1LDc2LjYzMjggQTAsMCAwIDAgMCA0OTUsNzYuNjMyOCBMNTY1LDc2LjYzMjggQTAsMCAwIDAgMCA1NjUsNzYuNjMyOCBMNTY1LDYxLjUgTDU1NSw1MS41IEw0OTUsNTEuNSBBMCwwIDAgMCAwIDQ5NSw1MS41ICIgZmlsbD0iIzAwODA4MCIgZmlsdGVyPSJ1cmwoI2YxaGMydjhnc2puejk3KSIgc3R5bGU9InN0cm9rZTogIzAwODA4MDsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHBhdGggZD0iTTU1NSw1MS41IEw1NTUsNjEuNSBMNTY1LDYxLjUgTDU1NSw1MS41ICIgZmlsbD0iIzAwODA4MCIgc3R5bGU9InN0cm9rZTogIzAwODA4MDsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNDkiIHg9IjUwMSIgeT0iNjguNTY2OSI+UHJvZHVjdDwvdGV4dD48IS0tTUQ1PVsyOWI1ODAxNzAyZGMyZDdkZmM1MmMwZTdhNDkyNDJhMF0KY2xhc3MgUGhvbmVCdWlsZGVyLS0+PHJlY3QgZmlsbD0iI0YwRkZGRiIgZmlsdGVyPSJ1cmwoI2YxaGMydjhnc2puejk3KSIgaGVpZ2h0PSIxMzcuNjMyOCIgaWQ9IlBob25lQnVpbGRlciIgc3R5bGU9InN0cm9rZTogIzQ2ODJCNDsgc3Ryb2tlLXdpZHRoOiAxLjU7IiB3aWR0aD0iMTM4IiB4PSIzMzciIHk9IjE4MSIvPjxlbGxpcHNlIGN4PSIzNjIuOCIgY3k9IjE5NyIgZmlsbD0iI0E5RENERiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwYXRoIGQ9Ik0zNjQuMzc4MSwxOTguODEyNSBMMzYwLjMzMTMsMTk4LjgxMjUgTDM1OS45NDA2LDE5OS43OTY5IEwzNjAuMzMxMywxOTkuNzk2OSBDMzYwLjc4NDQsMTk5Ljc5NjkgMzYwLjkyNSwxOTkuODI4MSAzNjEuMDk2OSwxOTkuOTUzMSBDMzYxLjMxNTYsMjAwLjEyNSAzNjEuNDQwNiwyMDAuMzc1IDM2MS40NDA2LDIwMC42NTYzIEMzNjEuNDQwNiwyMDAuOTM3NSAzNjEuMywyMDEuMjM0NCAzNjEuMDM0NCwyMDEuMzc1IEMzNjAuOTA5NCwyMDEuNDY4OCAzNjAuNjkwNiwyMDEuNSAzNjAuMzMxMywyMDEuNSBMMzU4LjA2NTYsMjAxLjUgQzM1Ny4zMTU2LDIwMS41IDM1Ni45NDA2LDIwMS4yMTg4IDM1Ni45NDA2LDIwMC42NTYzIEMzNTYuOTQwNiwyMDAuMzU5NCAzNTcuMDk2OSwyMDAuMDc4MSAzNTcuMzQ2OSwxOTkuOTIxOSBDMzU3LjUwMzEsMTk5LjgxMjUgMzU3LjY1OTQsMTk5Ljc5NjkgMzU4LjA4MTMsMTk5Ljc5NjkgTDM2MC43MjE5LDE5My4yODEzIEwzNTkuNjQzOCwxOTMuMjgxMyBDMzU5LjIwNjMsMTkzLjI4MTMgMzU5LjAzNDQsMTkzLjI1IDM1OC44NjI1LDE5My4xNDA2IEMzNTguNjQzOCwxOTIuOTY4OCAzNTguNTAzMSwxOTIuNzE4OCAzNTguNTAzMSwxOTIuNDM3NSBDMzU4LjUwMzEsMTkyLjE1NjMgMzU4LjY1OTQsMTkxLjg3NSAzNTguOTA5NCwxOTEuNzAzMSBDMzU5LjA2NTYsMTkxLjYwOTQgMzU5LjE5MDYsMTkxLjU5MzggMzU5LjY0MzgsMTkxLjU5MzggTDM2My4zMTU2LDE5MS41OTM4IEwzNjYuNzA2MywxOTkuNzk2OSBDMzY3LjE3NSwxOTkuNzk2OSAzNjcuMzMxMywxOTkuODI4MSAzNjcuNTAzMSwxOTkuOTY4OCBDMzY3LjcyMTksMjAwLjEyNSAzNjcuODYyNSwyMDAuMzc1IDM2Ny44NjI1LDIwMC42NTYzIEMzNjcuODYyNSwyMDAuOTM3NSAzNjcuNzA2MywyMDEuMjM0NCAzNjcuNDU2MywyMDEuMzc1IEMzNjcuMzE1NiwyMDEuNDY4OCAzNjcuMDk2OSwyMDEuNSAzNjYuNzM3NSwyMDEuNSBMMzY0LjM3ODEsMjAxLjUgQzM2My45NTYzLDIwMS41IDM2My43NTMxLDIwMS40NTMxIDM2My42MTI1LDIwMS4zMjgxIEMzNjMuMzkzOCwyMDEuMTcxOSAzNjMuMjUzMSwyMDAuOTIxOSAzNjMuMjUzMSwyMDAuNjU2MyBDMzYzLjI1MzEsMjAwLjM1OTQgMzYzLjQwOTQsMjAwLjA3ODEgMzYzLjY1OTQsMTk5LjkyMTkgQzM2My44MTU2LDE5OS44MTI1IDM2My45MjUsMTk5Ljc5NjkgMzY0LjM3ODEsMTk5Ljc5NjkgTDM2NC43Njg4LDE5OS43OTY5IFogTTM2My42NzUsMTk3LjEwOTQgTDM2Mi4zNDY5LDE5My44NDM4IEwzNjEuMDAzMSwxOTcuMTA5NCBaICIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXN0eWxlPSJpdGFsaWMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iODIiIHg9IjM3OS4yIiB5PSIyMDEuMTU0MyI+UGhvbmVCdWlsZGVyPC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjMzOCIgeDI9IjQ3NCIgeTE9IjIxMyIgeTI9IjIxMyIvPjxwb2x5Z29uIGZpbGw9Im5vbmUiIHBvaW50cz0iMzQ4LDIxOSwzNTIsMjIzLDM0OCwyMjcsMzQ0LDIyMyIgc3R5bGU9InN0cm9rZTogI0IzOEQyMjsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNzQiIHg9IjM1NyIgeT0iMjI3LjIxMDQiPlBob25lIHBob25lPC90ZXh0PjxsaW5lIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS41OyIgeDE9IjMzOCIgeDI9IjQ3NCIgeTE9IjIzMy44MDQ3IiB5Mj0iMjMzLjgwNDciLz48ZWxsaXBzZSBjeD0iMzQ4IiBjeT0iMjQ0LjgwNDciIGZpbGw9IiM4NEJFODQiIHJ4PSIzIiByeT0iMyIgc3R5bGU9InN0cm9rZTogIzAzODA0ODsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTAwIiB4PSIzNTciIHk9IjI0OC4wMTUxIj52b2lkIEJ1aWxkTmFtZSgpOzwvdGV4dD48ZWxsaXBzZSBjeD0iMzQ4IiBjeT0iMjU3LjYwOTQiIGZpbGw9IiM4NEJFODQiIHJ4PSIzIiByeT0iMyIgc3R5bGU9InN0cm9rZTogIzAzODA0ODsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iOTIiIHg9IjM1NyIgeT0iMjYwLjgxOTgiPnZvaWQgQnVpbGRTT0MoKTs8L3RleHQ+PGVsbGlwc2UgY3g9IjM0OCIgY3k9IjI3MC40MTQxIiBmaWxsPSIjODRCRTg0IiByeD0iMyIgcnk9IjMiIHN0eWxlPSJzdHJva2U6ICMwMzgwNDg7IHN0cm9rZS13aWR0aDogMS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEwNyIgeD0iMzU3IiB5PSIyNzMuNjI0NSI+dm9pZCBCdWlsZFNjcmVlbigpOzwvdGV4dD48ZWxsaXBzZSBjeD0iMzQ4IiBjeT0iMjgzLjIxODgiIGZpbGw9IiM4NEJFODQiIHJ4PSIzIiByeT0iMyIgc3R5bGU9InN0cm9rZTogIzAzODA0ODsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTEyIiB4PSIzNTciIHk9IjI4Ni40MjkyIj52b2lkIEJ1aWxkQ2FtZXJhKCk7PC90ZXh0PjxlbGxpcHNlIGN4PSIzNDgiIGN5PSIyOTYuMDIzNCIgZmlsbD0iIzg0QkU4NCIgcng9IjMiIHJ5PSIzIiBzdHlsZT0ic3Ryb2tlOiAjMDM4MDQ4OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMDgiIHg9IjM1NyIgeT0iMjk5LjIzMzkiPnZvaWQgQnVpbGRCYXR0ZXJ5KCk7PC90ZXh0PjxlbGxpcHNlIGN4PSIzNDgiIGN5PSIzMDguODI4MSIgZmlsbD0iIzg0QkU4NCIgcng9IjMiIHJ5PSIzIiBzdHlsZT0ic3Ryb2tlOiAjMDM4MDQ4OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSIxMDIiIHg9IjM1NyIgeT0iMzEyLjAzODYiPlBob25lIEdldFBob25lKCk8L3RleHQ+PHBhdGggZD0iTTUxMC41LDIzNy41IEw1MTAuNSwyNDYgTDQ3NS4wMzUsMjUwIEw1MTAuNSwyNTQgTDUxMC41LDI2Mi42MzI4IEEwLDAgMCAwIDAgNTEwLjUsMjYyLjYzMjggTDU3NS41LDI2Mi42MzI4IEEwLDAgMCAwIDAgNTc1LjUsMjYyLjYzMjggTDU3NS41LDI0Ny41IEw1NjUuNSwyMzcuNSBMNTEwLjUsMjM3LjUgQTAsMCAwIDAgMCA1MTAuNSwyMzcuNSAiIGZpbGw9IiMwMDgwODAiIGZpbHRlcj0idXJsKCNmMWhjMnY4Z3Nqbno5NykiIHN0eWxlPSJzdHJva2U6ICMwMDgwODA7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwYXRoIGQ9Ik01NjUuNSwyMzcuNSBMNTY1LjUsMjQ3LjUgTDU3NS41LDI0Ny41IEw1NjUuNSwyMzcuNSAiIGZpbGw9IiMwMDgwODAiIHN0eWxlPSJzdHJva2U6ICMwMDgwODA7IHN0cm9rZS13aWR0aDogMS4wOyIvPjx0ZXh0IGZpbGw9IiNGRkZGRkYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjQ0IiB4PSI1MTYuNSIgeT0iMjU0LjU2NjkiPkJ1aWxkZXI8L3RleHQ+PCEtLU1ENT1bNTBhY2ZmYjIwYzdkMjMyNzA5MjQwNzg4Y2U4NjQ0MWVdCmNsYXNzIE9uZVBsdXMtLT48cmVjdCBmaWxsPSIjRjBGRkZGIiBmaWx0ZXI9InVybCgjZjFoYzJ2OGdzam56OTcpIiBoZWlnaHQ9IjczLjYwOTQiIGlkPSJPbmVQbHVzIiBzdHlsZT0ic3Ryb2tlOiAjNDY4MkI0OyBzdHJva2Utd2lkdGg6IDEuNTsiIHdpZHRoPSIxNDQiIHg9IjExMyIgeT0iMjEzIi8+PGVsbGlwc2UgY3g9IjE1NS40NSIgY3k9IjIyOSIgZmlsbD0iI0FERDFCMiIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwYXRoIGQ9Ik0xNTcuNzkzOCwyMjQuNjcxOSBMMTU3Ljk2NTYsMjI0Ljc1IEMxNTguMTg0NCwyMjQuNDM3NSAxNTguMzg3NSwyMjQuMzQzOCAxNTguNjg0NCwyMjQuMzQzOCBDMTU4Ljk4MTMsMjI0LjM0MzggMTU5LjI2MjUsMjI0LjQ4NDQgMTU5LjQxODgsMjI0Ljc1IEMxNTkuNTEyNSwyMjQuOTA2MyAxNTkuNTI4MSwyMjUuMDMxMyAxNTkuNTI4MSwyMjUuNDY4OCBMMTU5LjUyODEsMjI2Ljg5MDYgQzE1OS41MjgxLDIyNy4zMTI1IDE1OS40OTY5LDIyNy41IDE1OS4zODc1LDIyNy42NTYzIEMxNTkuMjE1NiwyMjcuODc1IDE1OC45NSwyMjguMDE1NiAxNTguNjg0NCwyMjguMDE1NiBDMTU4LjQ2NTYsMjI4LjAxNTYgMTU4LjIzMTMsMjI3LjkwNjMgMTU4LjA5MDYsMjI3Ljc2NTYgQzE1Ny45NSwyMjcuNjQwNiAxNTcuOTE4OCwyMjcuNTE1NiAxNTcuODU2MywyMjcuMTA5NCBDMTU3Ljc2MjUsMjI2LjcwMzEgMTU3LjU5MDYsMjI2LjQ4NDQgMTU3LjEwNjMsMjI2LjIwMzEgQzE1Ni42Mzc1LDIyNS45NTMxIDE1Ni4wMjgxLDIyNS43OTY5IDE1NS40NSwyMjUuNzk2OSBDMTUzLjcxNTYsMjI1Ljc5NjkgMTUyLjQ2NTYsMjI3LjEwOTQgMTUyLjQ2NTYsMjI4Ljg5MDYgTDE1Mi40NjU2LDIyOS45ODQ0IEMxNTIuNDY1NiwyMzEuNjg3NSAxNTMuNzYyNSwyMzIuNzgxMyAxNTUuODA5NCwyMzIuNzgxMyBDMTU2LjU3NSwyMzIuNzgxMyAxNTcuMjYyNSwyMzIuNjU2MyAxNTcuNjg0NCwyMzIuMzkwNiBDMTU3Ljg3MTksMjMyLjI5NjkgMTU3Ljg3MTksMjMyLjI5NjkgMTU4LjMyNSwyMzEuODEyNSBDMTU4LjUxMjUsMjMxLjYyNSAxNTguNzE1NiwyMzEuNTQ2OSAxNTguOTM0NCwyMzEuNTQ2OSBDMTU5LjQwMzEsMjMxLjU0NjkgMTU5Ljc5MzgsMjMxLjkzNzUgMTU5Ljc5MzgsMjMyLjM5MDYgQzE1OS43OTM4LDIzMi43ODEzIDE1OS40NjU2LDIzMy4yMzQ0IDE1OC44ODc1LDIzMy42NDA2IEMxNTguMTM3NSwyMzQuMTg3NSAxNTYuOTgxMywyMzQuNDg0NCAxNTUuNzYyNSwyMzQuNDg0NCBDMTUyLjg3MTksMjM0LjQ4NDQgMTUwLjc2MjUsMjMyLjU5MzggMTUwLjc2MjUsMjMwLjAxNTYgTDE1MC43NjI1LDIyOC44OTA2IEMxNTAuNzYyNSwyMjYuMTcxOSAxNTIuNzYyNSwyMjQuMDkzOCAxNTUuMzg3NSwyMjQuMDkzOCBDMTU2LjI2MjUsMjI0LjA5MzggMTU2Ljg1NjMsMjI0LjIzNDQgMTU3Ljc5MzgsMjI0LjY3MTkgWiAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nQW5kR2x5cGhzIiB0ZXh0TGVuZ3RoPSI1MSIgeD0iMTc1LjU1IiB5PSIyMzMuMTU0MyI+T25lUGx1czwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiAjNDY4MkI0OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIxMTQiIHgyPSIyNTYiIHkxPSIyNDUiIHkyPSIyNDUiLz48cmVjdCBmaWxsPSJub25lIiBoZWlnaHQ9IjYiIHN0eWxlPSJzdHJva2U6ICNDODI5MzA7IHN0cm9rZS13aWR0aDogMS4wOyIgd2lkdGg9IjYiIHg9IjEyMSIgeT0iMjUzIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iMTE4IiB4PSIxMzMiIHk9IjI1OS4yMTA0Ij5QaG9uZUJ1aWxkZXIgYnVpbGRlcjwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiAjNDY4MkI0OyBzdHJva2Utd2lkdGg6IDEuNTsiIHgxPSIxMTQiIHgyPSIyNTYiIHkxPSIyNjUuODA0NyIgeTI9IjI2NS44MDQ3Ii8+PGVsbGlwc2UgY3g9IjEyNCIgY3k9IjI3Ni44MDQ3IiBmaWxsPSIjODRCRTg0IiByeD0iMyIgcnk9IjMiIHN0eWxlPSJzdHJva2U6ICMwMzgwNDg7IHN0cm9rZS13aWR0aDogMS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmdBbmRHbHlwaHMiIHRleHRMZW5ndGg9IjEwMiIgeD0iMTMzIiB5PSIyODAuMDE1MSI+UGhvbmUgQ29uc3RydWN0KCk8L3RleHQ+PHBhdGggZD0iTTYsMjM3LjUgTDYsMjYyLjYzMjggQTAsMCAwIDAgMCA2LDI2Mi42MzI4IEw3OCwyNjIuNjMyOCBBMCwwIDAgMCAwIDc4LDI2Mi42MzI4IEw3OCwyNTUuNSBMMTEyLjcxMSwyNTAgTDc4LDI0Ny41IEw3OCwyNDcuNSBMNjgsMjM3LjUgTDYsMjM3LjUgQTAsMCAwIDAgMCA2LDIzNy41ICIgZmlsbD0iIzAwODA4MCIgZmlsdGVyPSJ1cmwoI2YxaGMydjhnc2puejk3KSIgc3R5bGU9InN0cm9rZTogIzAwODA4MDsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHBhdGggZD0iTTY4LDIzNy41IEw2OCwyNDcuNSBMNzgsMjQ3LjUgTDY4LDIzNy41ICIgZmlsbD0iIzAwODA4MCIgc3R5bGU9InN0cm9rZTogIzAwODA4MDsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNTEiIHg9IjEyIiB5PSIyNTQuNTY2OSI+RGlyZWN0b3I8L3RleHQ+PCEtLU1ENT1bYTU1NDk5NjBiODQxN2ZmNTBkZDQ2YTg4MTQ3MTM3MDJdCnJldmVyc2UgbGluayBQaG9uZSB0byBQaG9uZUJ1aWxkZXItLT48cGF0aCBkPSJNNDA2LDE0MC41ODIgQzQwNiwxNTMuOTAzIDQwNiwxNjcuNjk5IDQwNiwxODAuODA0ICIgZmlsbD0ibm9uZSIgaWQ9IlBob25lJmx0Oy1QaG9uZUJ1aWxkZXIiIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS4wOyBzdHJva2UtZGFzaGFycmF5OiA3LjAsNy4wOyIvPjxwb2x5Z29uIGZpbGw9Im5vbmUiIHBvaW50cz0iMzk5LDE0MC4yMDYsNDA2LDEyMC4yMDYsNDEzLDE0MC4yMDYsMzk5LDE0MC4yMDYiIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS4wOyIvPjwhLS1NRDU9WzcyMTAzMzg4OWE4YjA4ZGMzYWQxODNlNDk3MjU2ZjI1XQpyZXZlcnNlIGxpbmsgUGhvbmVCdWlsZGVyIHRvIE9uZVBsdXM2VEJ1aWxkZXItLT48cGF0aCBkPSJNMzYxLjksMzM3LjA5OSBDMzUwLjgyNywzNTguNzE4IDMzOS4yNDMsMzgxLjMzNiAzMjkuMTg2LDQwMC45NzEgIiBmaWxsPSJub25lIiBpZD0iUGhvbmVCdWlsZGVyJmx0Oy1PbmVQbHVzNlRCdWlsZGVyIiBzdHlsZT0ic3Ryb2tlOiAjNDY4MkI0OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSJub25lIiBwb2ludHM9IjM1NS42ODksMzMzLjg3MiwzNzEuMDM3LDMxOS4yNjIsMzY4LjE0OSwzNDAuMjU0LDM1NS42ODksMzMzLjg3MiIgc3R5bGU9InN0cm9rZTogIzQ2ODJCNDsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PCEtLU1ENT1bNWVjMzJjOTQyNTY5ZjAzNDFhMjc4YzY5Y2ZhYmY4NjddCnJldmVyc2UgbGluayBQaG9uZUJ1aWxkZXIgdG8gT25lUGx1czdUQnVpbGRlci0tPjxwYXRoIGQ9Ik00MzYuMjY5LDMzOC4zOTggQzQ0My42MiwzNTkuNjIyIDQ1MS4yNzcsMzgxLjcyOSA0NTcuOTQxLDQwMC45NzEgIiBmaWxsPSJub25lIiBpZD0iUGhvbmVCdWlsZGVyJmx0Oy1PbmVQbHVzN1RCdWlsZGVyIiBzdHlsZT0ic3Ryb2tlOiAjNDY4MkI0OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48cG9seWdvbiBmaWxsPSJub25lIiBwb2ludHM9IjQyOS41NzMsMzQwLjQ1Miw0MjkuNjQyLDMxOS4yNjIsNDQyLjgwMiwzMzUuODcsNDI5LjU3MywzNDAuNDUyIiBzdHlsZT0ic3Ryb2tlOiAjNDY4MkI0OyBzdHJva2Utd2lkdGg6IDEuMDsiLz48IS0tTUQ1PVs1YjRiNzIwNzE5ZDRlMmQ4ZWRmNTVmNTgxZjA0YTY4M10KbGluayBPbmVQbHVzIHRvIFBob25lQnVpbGRlci0tPjxwYXRoIGQ9Ik0yNjkuMDU4LDI1MCBDMjY5LjA1OCwyNTAgMzA2LjEzOCwyNTAgMzIzLjU2OSwyNTAgIiBmaWxsPSJub25lIiBpZD0iT25lUGx1cy1QaG9uZUJ1aWxkZXIiIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxwb2x5Z29uIGZpbGw9IiM0NjgyQjQiIHBvaW50cz0iMzM2LjY3MywyNTAsMzI3LjY3MywyNDYsMzMxLjY3MywyNTAsMzI3LjY3MywyNTQsMzM2LjY3MywyNTAiIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6ICM0NjgyQjQ7IHN0cm9rZS13aWR0aDogMS4wOyIgeDE9IjMzMS42NzMiIHgyPSIzMjMuNjczIiB5MT0iMjUwIiB5Mj0iMjUwIi8+PHBvbHlnb24gZmlsbD0iI0ZGRkZGRiIgcG9pbnRzPSIyNTcuMDU4LDI1MCwyNjMuMDU4LDI1NCwyNjkuMDU4LDI1MCwyNjMuMDU4LDI0NiwyNTcuMDU4LDI1MCIgc3R5bGU9InN0cm9rZTogIzQ2ODJCNDsgc3Ryb2tlLXdpZHRoOiAxLjA7Ii8+PHRleHQgZmlsbD0iI0E5QTlBOSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZ0FuZEdseXBocyIgdGV4dExlbmd0aD0iNDMiIHg9IjI3NS41IiB5PSIyNDMuMDY2OSI+YnVpbGRlcjwvdGV4dD48IS0tTUQ1PVtlNzc5ZDM0YjM3NmU5NzZlNTdmNTEzMDBkYjAxNTIyY10KQHN0YXJ0dW1sDQogc2tpbnBhcmFtIGNsYXNzIHsNCiAgICBCYWNrZ3JvdW5kQ29sb3IgQXp1cmUNCiAgICBBcnJvd0NvbG9yIFN0ZWVsQmx1ZQ0KICAgIEJvcmRlckNvbG9yIFN0ZWVsQmx1ZQ0KfQ0KDQpza2lucGFyYW0gTm90ZXsNCiAgICBCYWNrZ3JvdW5kQ29sb3IgVGVhbA0KICAgIEJvcmRlckNvbG9yIFRlYWwNCiAgICBGb250Q29sb3IgV2hpdGUNCn0NCg0Kc2tpbnBhcmFtIEFycm93Rm9udENvbG9yIERhcmtHcmF5DQpza2lucGFyYW0gUGFja2FnZUJhY2tncm91bmRDb2xvciBHYWluc2Jvcm8NCg0KcGFja2FnZSBDb25jcmV0ZUJ1aWxkZXIgPDxGb2xkZXI+PiB7DQogICAgY2xhc3MgT25lUGx1czZUQnVpbGRlcg0KICAgIGNsYXNzIE9uZVBsdXM3VEJ1aWxkZXINCn0NCg0KY2xhc3MgUGhvbmUgew0KICAgICsgc3RyaW5nIE5hbWUNCiAgICArIHN0cmluZyBTT0MNCiAgICArIHN0cmluZyBTY3JlZW4NCiAgICArIHN0cmluZyBCYXR0ZXJ5DQogICAgKyBzdHJpbmcgQ2FtZXJhDQp9DQpub3RlIHJpZ2h0OiBQcm9kdWN0DQoNCmFic3RyYWN0IGNsYXNzIFBob25lQnVpbGRlciB7DQogICAgIyBQaG9uZSBwaG9uZQ0KICAgICsgdm9pZCBCdWlsZE5hbWUoKTsNCiAgICArIHZvaWQgQnVpbGRTT0MoKTsNCiAgICArIHZvaWQgQnVpbGRTY3JlZW4oKTsNCiAgICArIHZvaWQgQnVpbGRDYW1lcmEoKTsNCiAgICArIHZvaWQgQnVpbGRCYXR0ZXJ5KCk7DQogICAgKyBQaG9uZSBHZXRQaG9uZSgpDQp9DQpub3RlIHJpZ2h0OiBCdWlsZGVyDQoNCmNsYXNzIE9uZVBsdXM2VEJ1aWxkZXIgew0KICAgICsgdm9pZCBCdWlsZE5hbWUoKTsNCiAgICArIHZvaWQgQnVpbGRTT0MoKTsNCiAgICArIHZvaWQgQnVpbGRTY3JlZW4oKTsNCiAgICArIHZvaWQgQnVpbGRDYW1lcmEoKTsNCiAgICArIHZvaWQgQnVpbGRCYXR0ZXJ5KCk7DQp9DQoNCmNsYXNzIE9uZVBsdXM3VEJ1aWxkZXIgew0KICAgICsgdm9pZCBCdWlsZE5hbWUoKTsNCiAgICArIHZvaWQgQnVpbGRTT0MoKTsNCiAgICArIHZvaWQgQnVpbGRTY3JlZW4oKTsNCiAgICArIHZvaWQgQnVpbGRDYW1lcmEoKTsNCiAgICArIHZvaWQgQnVpbGRCYXR0ZXJ5KCk7DQp9DQoNCmNsYXNzIE9uZVBsdXMgew0KICAgIC0gUGhvbmVCdWlsZGVyIGJ1aWxkZXINCiAgICArIFBob25lIENvbnN0cnVjdCgpDQp9DQpub3RlIGxlZnQ6IERpcmVjdG9yDQoNClBob25lIDx8Li4gUGhvbmVCdWlsZGVyDQpQaG9uZUJ1aWxkZXIgPHwtIC0gT25lUGx1czZUQnVpbGRlcg0KUGhvbmVCdWlsZGVyIDx8LSAtIE9uZVBsdXM3VEJ1aWxkZXINCk9uZVBsdXMgby0+IFBob25lQnVpbGRlciA6IGJ1aWxkZXINCkBlbmR1bWwNCgpQbGFudFVNTCB2ZXJzaW9uIDEuMjAyMC4wM2JldGExMShVbmtub3duIGNvbXBpbGUgdGltZSkKKEdQTCBzb3VyY2UgZGlzdHJpYnV0aW9uKQpKYXZhIFJ1bnRpbWU6IEphdmEoVE0pIFNFIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBKYXZhIEhvdFNwb3QoVE0pIDY0LUJpdCBTZXJ2ZXIgVk0KSmF2YSBWZXJzaW9uOiAxLjcuMF8yNS1iMTUKT3BlcmF0aW5nIFN5c3RlbTogTGludXgKRGVmYXVsdCBFbmNvZGluZzogVVRGLTgKTGFuZ3VhZ2U6IGVuCkNvdW50cnk6IFVTCi0tPjwvZz48L3N2Zz4='>
+
+
+<p>以一加手机举例，一加作为指挥者，具体建造者包括一加6T和一加7T两款手机的建造者，实现了PhoneBuilder，使用了<strong>不同</strong>的<code>BuildSOC</code>、<code>BuildScreen</code>等方法选用不同的零部件，但是OnePlus使用<strong>相同</strong>的<code>Construct</code>装配流程，可以生产出两种不同型号的📱。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Product</span></span><br><span class="line"><span class="keyword">class</span> <span class="title">Phone</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Part1</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="comment">// Part2</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> SOC &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="comment">// Part3</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Screen &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="comment">// Part4</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Battery &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="comment">// Part5</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Camera &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Builder</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">PhoneBuilder</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 创建产品对象</span></span><br><span class="line">    <span class="keyword">protected</span> Phone phone = <span class="keyword">new</span> Phone();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">BuildName</span>(<span class="params"></span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">BuildSOC</span>(<span class="params"></span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">BuildScreen</span>(<span class="params"></span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">BuildCamera</span>(<span class="params"></span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">BuildBattery</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取产品对象 GetResult</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Phone <span class="title">GetPhone</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> phone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ConcreteBuilder</span></span><br><span class="line"><span class="keyword">class</span> <span class="title">OnePlus6TBuilder</span> : <span class="title">PhoneBuilder</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">BuildName</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phone.Name = <span class="string">"OnePlus 6T"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">BuildSOC</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phone.SOC = <span class="string">"Qualcomm Snapdragon 845"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">BuildScreen</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phone.Screen = <span class="string">"6.41-inch 19.5:9 Optic AMOLED"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">BuildCamera</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phone.Camera = <span class="string">"Sony IMX 519"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">BuildBattery</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phone.Battery = <span class="string">"3700 mAh lithium battery"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ConcreteBuilder</span></span><br><span class="line"><span class="keyword">class</span> <span class="title">OnePlus7TBuilder</span> : <span class="title">PhoneBuilder</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">BuildName</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phone.Name = <span class="string">"OnePlus 7T"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">BuildSOC</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phone.SOC = <span class="string">"Qualcomm Snapdragon 855 Plus"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">BuildScreen</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phone.Screen = <span class="string">"Samsung 6.55-inch 90Hz Fluid Display"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">BuildCamera</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phone.Camera = <span class="string">"Sony IMX 586"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">BuildBattery</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phone.Battery = <span class="string">"3800 mAh lithium battery"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Director中的<code>Construct()</code>方法定义了<code>BuildPartX()</code>的调用次序，提供了一个流程模板。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Director</span></span><br><span class="line"><span class="keyword">class</span> <span class="title">OnePlus</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> PhoneBuilder phoneBuilder;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetPhoneBuilder</span>(<span class="params">PhoneBuilder phoneBuilder</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.phoneBuilder = phoneBuilder;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Phone <span class="title">Construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        phoneBuilder.BuildName();</span><br><span class="line">        phoneBuilder.BuildSOC();</span><br><span class="line">        phoneBuilder.BuildScreen();</span><br><span class="line">        phoneBuilder.BuildCamera();</span><br><span class="line">        phoneBuilder.BuildBattery();</span><br><span class="line">        <span class="keyword">return</span> phoneBuilder.GetPhone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>客户端调用时，需要为一加指定机型（具体建造者），就可以获得具体的📱产品。指定具体建造者实例也可以使用配置文件等方法注入。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    OnePlus onePlus = <span class="keyword">new</span> OnePlus();</span><br><span class="line">    onePlus.SetPhoneBuilder(<span class="keyword">new</span> OnePlus7TBuilder());</span><br><span class="line">    <span class="comment">//onePlus.SetPhoneBuilder(new OnePlus6TBuilder());</span></span><br><span class="line">    Phone phone = onePlus.Construct();</span><br><span class="line">    Console.WriteLine(phone.Name);</span><br><span class="line">    Console.WriteLine(phone.SOC);</span><br><span class="line">    Console.WriteLine(phone.Screen);</span><br><span class="line">    Console.WriteLine(phone.Camera);</span><br><span class="line">    Console.WriteLine(phone.Battery);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在建造者模式中，Director角色可以与Builder角色合并，也就是将Director的<code>Construct()</code>方法直接写入Builder的<code>GetResult()</code>方法中。这种实现会简化了系统，且不影响灵活性和扩展性，但是加重了Builder的职责，对于<code>Construct()</code>方法较为复杂的场景不适用。</p>
+<h1 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h1><p>优点：</p>
+<ol>
+<li>客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使得相同的创建过程可以创建不同的产品对象。</li>
+<li>可以很方便地增加或更换具体建造者。</li>
+<li>将复杂的产品创建步骤分解在不同的方法中，使得创建过程更加清晰，控制也更为方便。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>建造者模式要求所创建的产品有较多的共同点，组成成分相似，如果产品间差异较大则不适合建造者模式。</li>
+<li>如果产品内部组成变化复杂，可能会需要定义很多具体建造者类来实现这种变化，导致系统变的很庞大，增加系统理解难度和运行成本。</li>
+</ol>
+<h1 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h1><ul>
+<li>需要生产的产品有复杂的内部结构，这些产品对象通常包含多个成员变量。</li>
+<li>需要生产的产品对象熟悉相互依赖，需要指定其生产顺序。</li>
+<li>对象的创建过程独立于创建该对象的类。</li>
+<li>隔离复杂对象的创建和使用，并使得相同的创建过程可以创建不同的产品。</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>Akiya Xiao</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>本文链接:</span>
+                        <span><a href="https://akiyax.github.io/builder-pattern/">https://akiyax.github.io/builder-pattern/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>版权声明:</span>
+                        <span>© 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE <strong>转载请附上原文出处链接和本声明</strong></span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/net/">
+                            <i class="iconfont icon-tag1"></i>
+                            .net
+                        </a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="/">
+                    <i class="iconfont icon-home"></i>
+                    主页
+                </a>
+                <span>· </span>
+                <a href="javascript:window.history.back();">
+                    <i class="iconfont icon-back"></i>
+                    返回
+                </a>
+                
+                
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/abstract-fatory-pattern/">C#设计模式[3] - 抽象工厂模式</a>
+            
+        </section>
+        <br>
+        
+            <section id="comments" class="comments">
+              <style>
+                  .comments{ margin-top: 30px;}
+                  .v .vlist .vcard .vcontent {padding-top: 0;}
+                  .vcontent p { color:grey; margin-bottom: 10px;}
+                  .v * {line-height: normal;}
+                  .v .vwrap  {border-radius: 0px; padding: 10px;}
+                  .v .vbtn {border-radius: 0px;}
+                  .v code, .v pre {border-radius: 0px;}
+                  .v .vlist .vcard .vhead .vsys {border-radius: 1px; padding: 2px;}
+                  .v .vlist .vcard .vhead .vnick {color: #2d96bd;}
+                  .v .vlist .vcard .vh .vmeta .vat{color: #c7254e;}
+                  .v .vlist .vcard {padding-top: 0;}
+                  .v .vlist .vcard .vimg { width: 2.5em; height: 2.5em; }
+                  .v .vlist .vcard .vquote .vimg { width: 2.5em; height: 2.5em; }
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '.valine_comment',
+        app_id: 'baahrwTTyOayDYUv5AtkdGJj-gzGzoHsz',
+        app_key: 'iTfzn8X60g9v0zTtnvToc09l',
+        placeholder: '想对作者说点什么...',
+        notify: 'false',
+        verify: 'false',
+        avatar: 'retro',
+        visitor: 'true'
+    });
+</script>
+            </section>
+        
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Akiya Xiao | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
