@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Akiya Xiao">
+
+
+    <meta name="subtitle" content="Akiya Xiao's blog">
+
+
+    <meta name="description" content="Do one thing and do well !">
+
+
+
+<title>C# 设计模式导览 | 青龙指引你</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1614813_fp9wxdcpr9c.css"
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Akiya&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">
+                        
+                            <i class="iconfont icon-archives "></i>
+                        
+                        
+                        
+                        
+                        文章
+                    </a>
+                
+                    <a class="menu-item" href="/category">
+                        
+                        
+                            <i class="iconfont icon-categorys "></i>
+                        
+                        
+                        
+                        分类
+                    </a>
+                
+                    <a class="menu-item" href="/tag">
+                        
+                        
+                        
+                            <i class="iconfont icon-tags "></i>
+                        
+                        
+                        标签
+                    </a>
+                
+                    <a class="menu-item" href="/about">
+                        
+                        
+                        
+                        
+                            <i class="iconfont icon-about "></i>
+                        
+                        关于
+                    </a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Akiya&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">
+                        
+                            <i class="iconfont icon-archives "></i>
+                        
+                        
+                        
+                        
+                        文章
+                    </a>
+                
+                    <a class="menu-item" href="/category">
+                        
+                        
+                            <i class="iconfont icon-categorys "></i>
+                        
+                        
+                        
+                        分类
+                    </a>
+                
+                    <a class="menu-item" href="/tag">
+                        
+                        
+                        
+                            <i class="iconfont icon-tags "></i>
+                        
+                        
+                        标签
+                    </a>
+                
+                    <a class="menu-item" href="/about">
+                        
+                        
+                        
+                        
+                            <i class="iconfont icon-about "></i>
+                        
+                        关于
+                    </a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">▶︎ 展开目录</a>
+    </div>
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a onclick="go_top()">△ 顶部</a>
+        <a onclick="go_bottom()">▽ 底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "▼ 收起目录"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "▶︎ 展开目录"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">C# 设计模式导览</h1>
+            
+                <div class="post-meta">
+                    
+                        <!--作者:-->
+                        <i class="iconfont icon-user"></i>
+                        <a itemprop="author" rel="author" href="/">Akiya Xiao </a> &nbsp;
+                    
+
+                    
+                        <span class="post-time">
+                        <!--发布时间:-->
+                        <i class="iconfont icon-time"></i>
+                        <a href="#">2020-03-14&nbsp;&nbsp;2:20:58</a> &nbsp;
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        <!--分类:-->
+                        <i class="iconfont icon-category"></i>
+                            
+                                <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>&nbsp;
+                            
+                        </span>
+                    
+                    
+                    <span id="/csharp-design-pattern/" class="leancloud-visitors view" data-flag-title="C# 设计模式导览">
+                        <text class="post-meta-item-text">
+                            <!--阅读数:-->
+                            <i class="iconfont icon-view"></i>
+                        </text>
+                        
+                        <text class="leancloud-visitors-count">加载中</text>
+                      </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工作一段时间后才发现设计模式的重要性，实现同样功能的代码，人家的代码看着如此舒适，却又说不出好在哪里😟，想必是差在内功了。大三准备面试时也粗略学过一段时间设计模式，但因为缺乏工程经验，没有深切体会，现在重新捡起温习。</p>
+<p>本系列博客主要参考刘伟博士著作的<a href="https://blog.csdn.net/LoveLion/article/details/79601850" target="_blank" rel="noopener">《C#设计模式（第2版）》</a>一书👍，结合本人的实践与思考而写成，同时参阅网络上各位大佬的总结，不再列出。</p>
+<p>🍺源码汇总： <a href="https://github.com/AkiyaX/CSharpDesignPattern" target="_blank" rel="noopener">https://github.com/AkiyaX/CSharpDesignPattern</a></p>
+<p><img src="https://img-blog.csdn.net/20180318164255870" alt="《C#设计模式》 - 封面"></p>
+<h1 id="设计模式概览"><a href="#设计模式概览" class="headerlink" title="设计模式概览"></a>设计模式概览</h1><p>最早将模式思想引入软件工程方法学的是Gang of Four（GOF）自称的四位软件工程学者，分别是Erich Gamma、Richard Helm、Ralph Johnson和John Vlissides，他们在1994年归纳发表了23种在软件开发领域较为常用的设计模式。GOF对设计模式的定义：</p>
+<blockquote>
+<p><strong>设计模式</strong>是在特定环境下为解决某一通用软件设计问题提供的一套定制解决方案，该方案描述了类和对象之间的相互作用。<br><strong>Design patterns</strong> are desriptions of communicating objects and classes that are custormized to solve a general design problem in a particular context.</p>
+</blockquote>
+<h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><p><em>此类模式主要用于创建对象</em></p>
+<p><a href="https://akiyax.github.io/simple-factory-pattern/"><strong>简单工厂模式</strong></a>（Abstract Fatory Pattern）：定义一个工厂类，它可以根据参数不同返回不同类的实例，被创建的实例通常都具有共同的父类。</p>
+<p><a href="https://akiyax.github.io/factory-method-pattern/"><strong>工厂方法模式</strong></a>（Factory Method Pattern）：定义一个用于创建对象的接口，但是让子类决定将哪一个类实例化。工厂方法模式让一个类的实例化延迟到子类。</p>
+<p><a href="https://akiyax.github.io/abstract-fatory-pattern/"><strong>抽象工厂模式</strong></a>（Abstract Fatory Pattern）:提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。</p>
+<p><strong>建造者模式</strong>（Builder Pattern）：将一个复杂对象的构建与它的表示分离，使得同样的构造过程可以创建不同的表示。</p>
+<p><strong>原型模式</strong>（Prototype Pattern）：使用原型实例指定待创建对象的类型，并且通过复制这个原型来创建新的对象。</p>
+<p><strong>单例模式</strong>（Singleton Pattern）：确保一个类只有一个实例，并提供一个全局访问点来访问这个唯一实例。</p>
+<h2 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h2><p><em>此类模式主要用于处理类或对象的组合</em></p>
+<p><strong>适配器模式</strong>（Adapter Pattern）：将一个类的接口转换成客户希望看到的另一个接口，适配器模式让那些接口不兼容的类可以一起工作。</p>
+<p><strong>桥接模式</strong>（Bridge Pattern）：将抽象部分与它的实现部分解耦，使得两者都能够独立变化。</p>
+<p><strong>组合模式</strong>（Composite Pattern）：组合多个对象形成树形结构以表示具有部分——整体关系的层次结构，组合模式让客户端可以统一对待单个对象和组合对象。</p>
+<p><strong>装饰模式</strong>（Decorator Pattern）：动态地给一个对象增加一些额外的职责。就扩展功能而言，装饰器模式提供了一种比子类更加灵活的替代方案。</p>
+<p><strong>外观模式</strong>（Facade Pattern）：为子系统种的一组接口提供一个统一的入口，这个接口使得这一子系统更加容易使用。</p>
+<p><strong>享元模式</strong>（Flyweight Pattern）：运用共享技术有效地支持大量细粒度对象的复用。</p>
+<p><strong>代理模式</strong>（Proxy Pattern）：给某一个对象提供一个代理或占位符，并由代理对象来控制对原对象的访问。</p>
+<h2 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h2><p><em>此类模式主要用于描述类或对象如何交互和怎样分配职责</em></p>
+<p><strong>职责链模式</strong>（Chain of Responsibility Pattern）：避免将一个请求的发送者与接收者耦合在一起，让多个对象都有机会处理请求；将接受请求的对象连接成一条链，并且沿着这条链传递请求，指导一个对象能够处理它为止。</p>
+<p><strong>命令模式</strong>（Command Pattern）：将一个请求封装为一个对象，从而可用不同的请求对客户进行参数化，对请求排队或者记录请求日志，以及支持可撤销的操作。</p>
+<p><strong>解释器模式</strong>（Interperter Pattern）：给定一个语言，定义它的文法的一种表示，并定义一个解释器，这个解释器使用该表示来解释语言中的句子。</p>
+<p><strong>迭代器模式</strong>（Iterator Pattern）：提供一种方法顺序访问一个聚合对象中的各个元素，而又不用暴露该对象的内部表示。</p>
+<p><strong>中介者模式</strong>（Mediator Pattern）：定义一个对象来封装一系列对象的交互。中介者模式使各对象之间不需要显式地互相引用，从而使其耦合松散，而且让你可以独立地改变它们之间的交互。</p>
+<p><strong>备忘录模式</strong>（Memento Pattern）：在不破坏封装的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样可以在以后将对象恢复到原先保存的状态。</p>
+<p><strong>观察者模式</strong>（Observer Pattern）：定义对象之间的一种一对多依赖关系，使得每当一个对象状态覆盖发生改变时，其相关依赖对象皆得到通知并被自动更新。</p>
+<p><strong>状态模式</strong>（State Pattern）：允许一个对象在其内部状态改变时改变它的行为，对象看起来似乎修改了它的类。</p>
+<p><strong>策略模式</strong>（Strategy Pattern）：定义一系列算法，将每一个算法封装起来，并让它们可以互相转换，策略模式让算法可以独立于使用它的客户变化。</p>
+<p><strong>模板方法模式</strong>（Template Method Pattern）：定义一个操作中算法的框架，而将一些步骤延迟到子类中。模板方法模式使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
+<p><strong>访问者模式</strong>（Visitor Pattern）：表示一个作用于某对象结构中的各个元素的操作，访问者模式让你可以在不改变各原色的类前提下定义这些元素的新操作。</p>
+<h1 id="面向对象设计原则"><a href="#面向对象设计原则" class="headerlink" title="面向对象设计原则"></a>面向对象设计原则</h1><h2 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h2><blockquote>
+<p>一个对象应该只包含单一的职责，并且该职责完整地封装在一个类中。</p>
+</blockquote>
+<p>在软件系统中，一个类承担的职责越多，它被复用的可能性就越低。单一职责原则是实现高内聚、低耦合的指导方针。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">CustomerDataChart</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Connection <span class="title">GetConnection</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Custormer&gt; <span class="title">FindCustomers</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">CreateChart</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DisplayChart</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例如这个类承担了太多的原则，即包含连接数据库，又包含与图表生产和显示相关的方法。</p>
+<h2 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h2><blockquote>
+<p>软件实体应当对外扩展开放，对修改关闭。</p>
+</blockquote>
+<p>尽量在不修改原有代码的情况下进行功能扩展。</p>
+<h2 id="里氏代换原则"><a href="#里氏代换原则" class="headerlink" title="里氏代换原则"></a>里氏代换原则</h2><blockquote>
+<p>所有引用基类的地方必须能透明地使用其子类的对象。</p>
+</blockquote>
+<p>在软件中将一个基类对象替换成它的子类对象，程序不会产生任何错误和异常，反之不成立。</p>
+<h2 id="依赖倒转原则"><a href="#依赖倒转原则" class="headerlink" title="依赖倒转原则"></a>依赖倒转原则</h2><blockquote>
+<p>高层模块不应该依赖低层模块，它们都应该依赖抽象，抽象不应该依赖于细节，细节应该依赖于抽象。</p>
+</blockquote>
+<p>简单说就是，要面向接口编程，而非面向实现编程。</p>
+<p>在实现依赖倒转原则时，需要针对抽象层进行编程，而将具体类的对象通过依赖注入（Dependency Injection, DI）的方式注入其他对象中。</p>
+<p>在大多数情况下，开闭原则、里氏代换原则、依赖倒转原则会同时出现，<strong>开闭原则是目标，里氏代换原则是基础，依赖倒转原则是手段</strong>。</p>
+<h2 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h2><blockquote>
+<p>客户端不应该依赖那些它不需要的接口。</p>
+</blockquote>
+<h2 id="合成复用原则"><a href="#合成复用原则" class="headerlink" title="合成复用原则"></a>合成复用原则</h2><blockquote>
+<p>优先使用对象组合，而不是继承来达到复用目的。</p>
+</blockquote>
+<p>合成复用原则就是在一个新的对象里通过关联关系（包括组合关系和聚合关系）来使用一些已有的对象，使之成为新对象的一部分，新对象用过委派调用已有对象的方法发到复用功能的目的。简言之，复用是要尽量使用组合/聚合关系，少用继承。</p>
+<h2 id="迪米特法则（最少知识原则）"><a href="#迪米特法则（最少知识原则）" class="headerlink" title="迪米特法则（最少知识原则）"></a>迪米特法则（最少知识原则）</h2><blockquote>
+<p>每一个软件单位对其他的单位都只有最少的知识，而且局限于那些与本单位密切相关的软件单位。</p>
+</blockquote>
+<p>迪米特法则要求一个软件实体应当尽可能少地与其他实体发生相互作用。如果一个系统符合迪米特法则，那么当其中一个模块发生修改时，就会尽量少地影响其他模块，扩展会相对容易，这是对软件实体之间通信的限制，迪米特法则要求限制软件实体之间通信的宽度和深度。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>Akiya Xiao</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>本文链接:</span>
+                        <span><a href="https://akiyax.github.io/csharp-design-pattern/">https://akiyax.github.io/csharp-design-pattern/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>版权声明:</span>
+                        <span>© 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE <strong>转载请附上原文出处链接和本声明</strong></span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/net/">
+                            <i class="iconfont icon-tag1"></i>
+                            .net
+                        </a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="/">
+                    <i class="iconfont icon-home"></i>
+                    主页
+                </a>
+                <span>· </span>
+                <a href="javascript:window.history.back();">
+                    <i class="iconfont icon-back"></i>
+                    返回
+                </a>
+                
+                
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/simple-factory-pattern/">C#设计模式[1] - 简单工厂模式</a>
+            
+            
+            <a class="next" rel="next" href="/new-features-in-csharp/">C# 各版本新功能列表</a>
+            
+        </section>
+        <br>
+        
+            <section id="comments" class="comments">
+              <style>
+                  .comments{ margin-top: 30px;}
+                  .v .vlist .vcard .vcontent {padding-top: 0;}
+                  .vcontent p { color:grey; margin-bottom: 10px;}
+                  .v * {line-height: normal;}
+                  .v .vwrap  {border-radius: 0px; padding: 10px;}
+                  .v .vbtn {border-radius: 0px;}
+                  .v code, .v pre {border-radius: 0px;}
+                  .v .vlist .vcard .vhead .vsys {border-radius: 1px; padding: 2px;}
+                  .v .vlist .vcard .vhead .vnick {color: #2d96bd;}
+                  .v .vlist .vcard .vh .vmeta .vat{color: #c7254e;}
+                  .v .vlist .vcard {padding-top: 0;}
+                  .v .vlist .vcard .vimg { width: 2.5em; height: 2.5em; }
+                  .v .vlist .vcard .vquote .vimg { width: 2.5em; height: 2.5em; }
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '.valine_comment',
+        app_id: 'baahrwTTyOayDYUv5AtkdGJj-gzGzoHsz',
+        app_key: 'iTfzn8X60g9v0zTtnvToc09l',
+        placeholder: '想对作者说点什么...',
+        notify: 'false',
+        verify: 'false',
+        avatar: 'retro',
+        visitor: 'true'
+    });
+</script>
+            </section>
+        
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Akiya Xiao | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

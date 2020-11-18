@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Akiya Xiao">
+
+
+    <meta name="subtitle" content="Akiya Xiao's blog">
+
+
+    <meta name="description" content="Do one thing and do well !">
+
+
+
+<title>C# 各版本新功能列表 | 青龙指引你</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1614813_fp9wxdcpr9c.css"
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Akiya&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">
+                        
+                            <i class="iconfont icon-archives "></i>
+                        
+                        
+                        
+                        
+                        文章
+                    </a>
+                
+                    <a class="menu-item" href="/category">
+                        
+                        
+                            <i class="iconfont icon-categorys "></i>
+                        
+                        
+                        
+                        分类
+                    </a>
+                
+                    <a class="menu-item" href="/tag">
+                        
+                        
+                        
+                            <i class="iconfont icon-tags "></i>
+                        
+                        
+                        标签
+                    </a>
+                
+                    <a class="menu-item" href="/about">
+                        
+                        
+                        
+                        
+                            <i class="iconfont icon-about "></i>
+                        
+                        关于
+                    </a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Akiya&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">
+                        
+                            <i class="iconfont icon-archives "></i>
+                        
+                        
+                        
+                        
+                        文章
+                    </a>
+                
+                    <a class="menu-item" href="/category">
+                        
+                        
+                            <i class="iconfont icon-categorys "></i>
+                        
+                        
+                        
+                        分类
+                    </a>
+                
+                    <a class="menu-item" href="/tag">
+                        
+                        
+                        
+                            <i class="iconfont icon-tags "></i>
+                        
+                        
+                        标签
+                    </a>
+                
+                    <a class="menu-item" href="/about">
+                        
+                        
+                        
+                        
+                            <i class="iconfont icon-about "></i>
+                        
+                        关于
+                    </a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">▶︎ 展开目录</a>
+    </div>
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a onclick="go_top()">△ 顶部</a>
+        <a onclick="go_bottom()">▽ 底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "▼ 收起目录"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "▶︎ 展开目录"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">C# 各版本新功能列表</h1>
+            
+                <div class="post-meta">
+                    
+                        <!--作者:-->
+                        <i class="iconfont icon-user"></i>
+                        <a itemprop="author" rel="author" href="/">Akiya Xiao </a> &nbsp;
+                    
+
+                    
+                        <span class="post-time">
+                        <!--发布时间:-->
+                        <i class="iconfont icon-time"></i>
+                        <a href="#">2020-02-21&nbsp;&nbsp;11:36:28</a> &nbsp;
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        <!--分类:-->
+                        <i class="iconfont icon-category"></i>
+                            
+                                <a href="/categories/%E6%8A%80%E6%9C%AF%E6%B1%87%E6%80%BB/">技术汇总</a>&nbsp;
+                            
+                        </span>
+                    
+                    
+                    <span id="/new-features-in-csharp/" class="leancloud-visitors view" data-flag-title="C# 各版本新功能列表">
+                        <text class="post-meta-item-text">
+                            <!--阅读数:-->
+                            <i class="iconfont icon-view"></i>
+                        </text>
+                        
+                        <text class="leancloud-visitors-count">加载中</text>
+                      </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <blockquote>
+<p>参考资料：<a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/whats-new/csharp-version-history" target="_blank" rel="noopener">C#发展历史 - C#指南 | Microsoft Docs</a></p>
+</blockquote>
+<h1 id="C-各版本新功能列表"><a href="#C-各版本新功能列表" class="headerlink" title="C#各版本新功能列表"></a>C#各版本新功能列表</h1><ul>
+<li><a href="#c%e5%90%84%e7%89%88%e6%9c%ac%e6%96%b0%e5%8a%9f%e8%83%bd%e5%88%97%e8%a1%a8">C#各版本新功能列表</a><ul>
+<li><a href="#c-20%e7%89%88---2005">C# 2.0版 - 2005</a><ul>
+<li><a href="#%e6%b3%9b%e5%9e%8b">泛型</a></li>
+<li><a href="#%e5%88%86%e9%83%a8%e7%b1%bb%e5%9e%8b">分部类型</a></li>
+<li><a href="#%e5%8c%bf%e5%90%8d%e6%96%b9%e6%b3%95">匿名方法</a></li>
+<li><a href="#%e5%8f%af%e4%bb%a5%e4%b8%banull%e7%9a%84%e5%80%bc%e7%b1%bb%e5%9e%8b">可以为null的值类型</a></li>
+<li><a href="#%e8%bf%ad%e4%bb%a3%e5%99%a8">迭代器</a></li>
+<li><a href="#%e5%8d%8f%e5%8f%98%e5%92%8c%e9%80%86%e5%8f%98">协变和逆变</a></li>
+</ul>
+</li>
+<li><a href="#c-30%e7%89%88---2007">C# 3.0版 - 2007</a><ul>
+<li><a href="#%e8%87%aa%e5%8a%a8%e5%ae%9e%e7%8e%b0%e7%9a%84%e5%b1%9e%e6%80%a7">自动实现的属性</a></li>
+<li><a href="#%e5%8c%bf%e5%90%8d%e7%b1%bb%e5%9e%8b">匿名类型</a></li>
+<li><a href="#%e6%9f%a5%e8%af%a2%e8%a1%a8%e8%be%be%e5%bc%8flinq">查询表达式（LINQ）</a></li>
+<li><a href="#lambda%e8%a1%a8%e8%be%be%e5%bc%8f">Lambda表达式</a></li>
+<li><a href="#%e8%a1%a8%e8%be%be%e5%bc%8f%e6%a0%91">表达式树</a></li>
+<li><a href="#%e6%89%a9%e5%b1%95%e6%96%b9%e6%b3%95">扩展方法</a></li>
+<li><a href="#var">var</a></li>
+<li><a href="#%e5%88%86%e9%83%a8%e6%96%b9%e6%b3%95">分部方法</a></li>
+<li><a href="#%e5%af%b9%e8%b1%a1%e5%92%8c%e9%9b%86%e5%90%88%e5%88%9d%e5%a7%8b%e5%80%bc%e8%ae%be%e5%ae%9a%e9%a1%b9">对象和集合初始值设定项</a></li>
+</ul>
+</li>
+<li><a href="#c-40%e7%89%88---2010">C# 4.0版 - 2010</a><ul>
+<li><a href="#%e5%8a%a8%e6%80%81%e7%bb%91%e5%ae%9a">动态绑定</a></li>
+<li><a href="#%e5%91%bd%e5%90%8d%e5%8f%82%e6%95%b0%e5%8f%af%e9%80%89%e5%8f%82%e6%95%b0">命名参数/可选参数</a></li>
+<li><a href="#%e6%b3%9b%e5%9e%8b%e4%b8%ad%e7%9a%84%e5%8d%8f%e5%8f%98%e5%92%8c%e9%80%86%e5%8f%98">泛型中的协变和逆变</a></li>
+<li><a href="#%e7%b1%bb%e5%9e%8b%e7%ad%89%e6%95%88%e6%80%a7%e5%92%8c%e5%b5%8c%e5%85%a5%e7%9a%84%e4%ba%92%e6%93%8d%e4%bd%9c%e7%b1%bb%e5%9e%8b">类型等效性和嵌入的互操作类型</a></li>
+</ul>
+</li>
+<li><a href="#c-50%e7%89%88---2012">C# 5.0版 - 2012</a><ul>
+<li><a href="#%e5%bc%82%e6%ad%a5%e7%bc%96%e7%a8%8b">异步编程</a></li>
+<li><a href="#%e8%b0%83%e7%94%a8%e6%96%b9%e4%bf%a1%e6%81%af">调用方信息</a></li>
+</ul>
+</li>
+<li><a href="#c-60%e7%89%88---2015">C# 6.0版 - 2015</a><ul>
+<li><a href="#%e9%9d%99%e6%80%81%e5%af%bc%e5%85%a5">静态导入</a></li>
+<li><a href="#%e5%bc%82%e5%b8%b8%e7%ad%9b%e9%80%89%e5%99%a8">异常筛选器</a></li>
+<li><a href="#%e8%87%aa%e5%8a%a8%e5%88%9d%e5%a7%8b%e5%8c%96%e8%a1%a8%e8%be%be%e5%bc%8f">自动初始化表达式</a></li>
+<li><a href="#expression-bodied-%e5%87%bd%e6%95%b0%e6%88%90%e5%91%98">Expression-bodied 函数成员</a></li>
+<li><a href="#null%e4%bc%a0%e6%92%ad%e5%99%a8">Null传播器</a></li>
+<li><a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%86%85%e6%8f%92">字符串内插</a></li>
+<li><a href="#nameof%e8%a1%a8%e8%be%be%e5%bc%8f"><code>nameof</code>表达式</a></li>
+<li><a href="#%e7%b4%a2%e5%bc%95%e5%88%9d%e5%a7%8b%e5%80%bc%e8%ae%be%e5%ae%9a%e9%a1%b9">索引初始值设定项</a></li>
+</ul>
+</li>
+<li><a href="#c-70%e7%89%88---2017">C# 7.0版 - 2017</a><ul>
+<li><a href="#out%e5%8f%98%e9%87%8f">out变量</a></li>
+<li><a href="#%e5%85%83%e7%bb%84%e5%92%8c%e6%9e%90%e6%9e%84%e5%87%bd%e6%95%b0">元组和析构函数</a></li>
+<li><a href="#%e6%a8%a1%e5%bc%8f%e5%8c%b9%e9%85%8d">模式匹配</a></li>
+<li><a href="#%e6%9c%ac%e5%9c%b0%e5%87%bd%e6%95%b0">本地函数</a></li>
+<li><a href="#%e6%9b%b4%e5%a4%9a%e7%9a%84expression-bodied%e6%88%90%e5%91%98">更多的expression-bodied成员</a></li>
+<li><a href="#ref-%e5%b1%80%e9%83%a8%e5%8f%98%e9%87%8f%e5%92%8c%e8%bf%94%e5%9b%9e%e7%bb%93%e6%9e%9c">Ref 局部变量和返回结果</a></li>
+<li><a href="#%e5%bc%83%e5%85%83">弃元</a></li>
+<li><a href="#%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%96%87%e6%9c%ac%e5%92%8c%e6%95%b0%e5%ad%97%e5%88%86%e9%9a%94%e7%ac%a6">二进制文本和数字分隔符</a></li>
+<li><a href="#%e5%bc%95%e5%8f%91%e8%a1%a8%e8%be%be%e5%bc%8f">引发表达式</a></li>
+</ul>
+</li>
+<li><a href="#c-80%e7%89%88---2019">C# 8.0版 - 2019</a><ul>
+<li><a href="#readonly-%e6%88%90%e5%91%98">Readonly 成员</a></li>
+<li><a href="#%e9%bb%98%e8%ae%a4%e6%8e%a5%e5%8f%a3%e6%96%b9%e6%b3%95">默认接口方法</a></li>
+<li><a href="#%e5%9c%a8%e6%9b%b4%e5%a4%9a%e4%bd%8d%e7%bd%ae%e4%b8%ad%e4%bd%bf%e7%94%a8%e6%9b%b4%e5%a4%9a%e6%a8%a1%e5%bc%8f">在更多位置中使用更多模式</a><ul>
+<li><a href="#switch%e8%a1%a8%e8%be%be%e5%bc%8f">switch表达式</a></li>
+<li><a href="#%e5%b1%9e%e6%80%a7%e6%a8%a1%e5%bc%8f">属性模式</a></li>
+<li><a href="#%e5%85%83%e7%bb%84%e6%a8%a1%e5%bc%8f">元组模式</a></li>
+<li><a href="#%e4%bd%8d%e7%bd%ae%e6%a8%a1%e5%bc%8f">位置模式</a></li>
+</ul>
+</li>
+<li><a href="#using%e5%a3%b0%e6%98%8e">using声明</a></li>
+<li><a href="#%e9%9d%99%e6%80%81%e6%9c%ac%e5%9c%b0%e5%87%bd%e6%95%b0">静态本地函数</a></li>
+<li><a href="#%e5%bc%82%e6%ad%a5%e6%b5%81">异步流</a></li>
+<li><a href="#%e7%b4%a2%e5%bc%95%e5%92%8c%e8%8c%83%e5%9b%b4">索引和范围</a></li>
+<li><a href="#null%e5%90%88%e5%b9%b6%e8%b5%8b%e5%80%bc">Null合并赋值</a></li>
+<li><a href="#%e9%9d%9e%e6%89%98%e7%ae%a1%e6%9e%84%e9%80%a0%e7%b1%bb%e5%9e%8b">非托管构造类型</a></li>
+<li><a href="#%e5%b5%8c%e5%a5%97%e8%a1%a8%e8%be%be%e5%bc%8f%e4%b8%ad%e7%9a%84-stackalloc">嵌套表达式中的 stackalloc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="C-2-0版-2005"><a href="#C-2-0版-2005" class="headerlink" title="C# 2.0版 - 2005"></a>C# 2.0版 - 2005</h2><h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Declare the generic class.</span></span><br><span class="line">public class GenericList&lt;T&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params">T input</span>)</span> &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title">TestGenericList</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">class</span> <span class="title">ExampleClass</span> &#123; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// Declare a list of type int.</span></span><br><span class="line">        GenericList&lt;<span class="keyword">int</span>&gt; list1 = <span class="keyword">new</span> GenericList&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line">        list1.Add(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Declare a list of type string.</span></span><br><span class="line">        GenericList&lt;<span class="keyword">string</span>&gt; list2 = <span class="keyword">new</span> GenericList&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line">        list2.Add(<span class="string">""</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Declare a list of type ExampleClass.</span></span><br><span class="line">        GenericList&lt;ExampleClass&gt; list3 = <span class="keyword">new</span> GenericList&lt;ExampleClass&gt;();</span><br><span class="line">        list3.Add(<span class="keyword">new</span> ExampleClass());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分部类型"><a href="#分部类型" class="headerlink" title="分部类型"></a>分部类型</h3><blockquote>
+<p>拆分一个类、一个结构、一个接口或一个方法的定义到两个或更多的文件中是可能的。 每个源文件包含类型或方法定义的一部分，编译应用程序时将把所有部分组合起来。</p>
+</blockquote>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">Employee</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DoWork</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">Employee</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GoToLunch</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="匿名方法"><a href="#匿名方法" class="headerlink" title="匿名方法"></a>匿名方法</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt; sum = <span class="keyword">delegate</span> (<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123; <span class="keyword">return</span> a + b; &#125;;</span><br><span class="line">Console.WriteLine(sum(<span class="number">3</span>, <span class="number">4</span>));  <span class="comment">// output: 7</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="可以为null的值类型"><a href="#可以为null的值类型" class="headerlink" title="可以为null的值类型"></a>可以为null的值类型</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span>? pi = <span class="number">3.14</span>;</span><br><span class="line"><span class="keyword">char</span>? letter = <span class="string">'a'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> m2 = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span>? m = m2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span>? flag = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// An array of a nullable type:</span></span><br><span class="line"><span class="keyword">int</span>?[] arr = <span class="keyword">new</span> <span class="keyword">int</span>?[<span class="number">10</span>];</span><br></pre></td></tr></table></figure>
+
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="function"><span class="keyword">int</span> number <span class="keyword">in</span> <span class="title">SomeNumbers</span>(<span class="params"></span>))</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Console.Write(number.ToString() + <span class="string">" "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Output: 3 5 8</span></span><br><span class="line">    Console.ReadKey();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> System.Collections.<span class="function">IEnumerable <span class="title">SomeNumbers</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">yield</span> <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">yield</span> <span class="keyword">return</span> <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">yield</span> <span class="keyword">return</span> <span class="number">8</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="协变和逆变"><a href="#协变和逆变" class="headerlink" title="协变和逆变"></a>协变和逆变</h3><blockquote>
+<p>在 C# 中，协变和逆变能够实现数组类型、委托类型和泛型类型参数的隐式引用转换。 协变保留分配兼容性，逆变则与之相反。</p>
+</blockquote>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Assignment compatibility.   </span></span><br><span class="line"><span class="keyword">string</span> str = <span class="string">"test"</span>;  </span><br><span class="line"><span class="comment">// An object of a more derived type is assigned to an object of a less derived type.   </span></span><br><span class="line"><span class="keyword">object</span> obj = str;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// Covariance.   </span></span><br><span class="line">IEnumerable&lt;<span class="keyword">string</span>&gt; strings = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;();  </span><br><span class="line"><span class="comment">// An object that is instantiated with a more derived type argument   </span></span><br><span class="line"><span class="comment">// is assigned to an object instantiated with a less derived type argument.   </span></span><br><span class="line"><span class="comment">// Assignment compatibility is preserved.   </span></span><br><span class="line">IEnumerable&lt;<span class="keyword">object</span>&gt; objects = strings;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// Contravariance.             </span></span><br><span class="line"><span class="comment">// Assume that the following method is in the class:   </span></span><br><span class="line"><span class="comment">// static void SetObject(object o) &#123; &#125;   </span></span><br><span class="line">Action&lt;<span class="keyword">object</span>&gt; actObject = SetObject;  </span><br><span class="line"><span class="comment">// An object that is instantiated with a less derived type argument   </span></span><br><span class="line"><span class="comment">// is assigned to an object instantiated with a more derived type argument.   </span></span><br><span class="line"><span class="comment">// Assignment compatibility is reversed.   </span></span><br><span class="line">Action&lt;<span class="keyword">string</span>&gt; actString = actObject;</span><br></pre></td></tr></table></figure>
+
+<h2 id="C-3-0版-2007"><a href="#C-3-0版-2007" class="headerlink" title="C# 3.0版 - 2007"></a>C# 3.0版 - 2007</h2><h3 id="自动实现的属性"><a href="#自动实现的属性" class="headerlink" title="自动实现的属性"></a>自动实现的属性</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This class is mutable. Its data can be modified from</span></span><br><span class="line"><span class="comment">// outside the class.</span></span><br><span class="line"><span class="keyword">class</span> <span class="title">Customer</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Auto-implemented properties for trivial get and set</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">double</span> TotalPurchases &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> CustomerID &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Constructor</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Customer</span>(<span class="params"><span class="keyword">double</span> purchases, <span class="keyword">string</span> name, <span class="keyword">int</span> ID</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        TotalPurchases = purchases;</span><br><span class="line">        Name = name;</span><br><span class="line">        CustomerID = ID;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Methods</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">GetContactInfo</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> <span class="string">"ContactInfo"</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">GetTransactionHistory</span>(<span class="params"></span>)</span> &#123; <span class="keyword">return</span> <span class="string">"History"</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// .. Additional methods, events, etc.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// Intialize a new object.</span></span><br><span class="line">        Customer cust1 = <span class="keyword">new</span> Customer(<span class="number">4987.63</span>, <span class="string">"Northwind"</span>, <span class="number">90108</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Modify a property.</span></span><br><span class="line">        cust1.TotalPurchases += <span class="number">499.99</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="匿名类型"><a href="#匿名类型" class="headerlink" title="匿名类型"></a>匿名类型</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> v = <span class="keyword">new</span> &#123; Amount = <span class="number">108</span>, Message = <span class="string">"Hello"</span> &#125;;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// Rest the mouse pointer over v.Amount and v.Message in the following  </span></span><br><span class="line"><span class="comment">// statement to verify that their inferred types are int and n .  </span></span><br><span class="line">Console.WriteLine(v.Amount + v.Message);</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询表达式（LINQ）"><a href="#查询表达式（LINQ）" class="headerlink" title="查询表达式（LINQ）"></a>查询表达式（LINQ）</h3><blockquote>
+<p>我们通常认为 C# 版本的杀手锏是查询表达式，也就是语言集成查询 (LINQ)。<br>LINQ 的构造可以建立在更细微的视图检查表达式树、Lambda 表达式以及匿名类型的基础上。 不过无论如何 C# 3.0 都提出了革命性的概念。 C# 3.0 开始为 C# 转变为面向对象/函数式混合语言打下基础。<br>具体来说，你现在可以编写 SQL 样式的声明性查询对集合以及其他项目执行操作。 </p>
+</blockquote>
+<h3 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; square = x =&gt; x * x;</span><br><span class="line">Console.WriteLine(square(<span class="number">5</span>));</span><br><span class="line"><span class="comment">// Output:</span></span><br><span class="line"><span class="comment">// 25</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="表达式树"><a href="#表达式树" class="headerlink" title="表达式树"></a>表达式树</h3><p>（还不是很理解）</p>
+<h3 id="扩展方法"><a href="#扩展方法" class="headerlink" title="扩展方法"></a>扩展方法</h3><blockquote>
+<p>扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。 </p>
+</blockquote>
+<h3 id="var"><a href="#var" class="headerlink" title="var"></a>var</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i = <span class="number">10</span>; <span class="comment">// Implicitly typed.</span></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">10</span>; <span class="comment">// Explicitly typed.</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分部方法"><a href="#分部方法" class="headerlink" title="分部方法"></a>分部方法</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">PM</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">A</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">partial</span> <span class="keyword">void</span> <span class="title">OnSomethingHappened</span>(<span class="params"><span class="keyword">string</span> s</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This part can be in a separate file.</span></span><br><span class="line">    <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">A</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// Comment out this method and the program</span></span><br><span class="line">        <span class="comment">// will still compile.</span></span><br><span class="line">        <span class="function"><span class="keyword">partial</span> <span class="keyword">void</span> <span class="title">OnSomethingHappened</span>(<span class="params">String s</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">"Something happened: &#123;0&#125;"</span>, s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="对象和集合初始值设定项"><a href="#对象和集合初始值设定项" class="headerlink" title="对象和集合初始值设定项"></a>对象和集合初始值设定项</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Cat</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Auto-implemented properties.</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Age &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Cat</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Cat</span>(<span class="params"><span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">this</span>.Name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="C-4-0版-2010"><a href="#C-4-0版-2010" class="headerlink" title="C# 4.0版 - 2010"></a>C# 4.0版 - 2010</h2><h3 id="动态绑定"><a href="#动态绑定" class="headerlink" title="动态绑定"></a>动态绑定</h3><p>（这里文档里贴的链接是错的）</p>
+<h3 id="命名参数-可选参数"><a href="#命名参数-可选参数" class="headerlink" title="命名参数/可选参数"></a>命名参数/可选参数</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PrintOrderDetails(productName: <span class="string">"Red Mug"</span>, sellerName: <span class="string">"Gift Shop"</span>, orderNum: <span class="number">31</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ExampleMethod</span>(<span class="params"><span class="keyword">int</span> required, <span class="keyword">string</span> optionalstr = <span class="string">"default string"</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int</span> optionalint = <span class="number">10</span></span>)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="泛型中的协变和逆变"><a href="#泛型中的协变和逆变" class="headerlink" title="泛型中的协变和逆变"></a>泛型中的协变和逆变</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IEnumerable&lt;Derived&gt; d = <span class="keyword">new</span> List&lt;Derived&gt;();</span><br><span class="line">IEnumerable&lt;Base&gt; b = d;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Action&lt;Base&gt; b = (target) =&gt; &#123; Console.WriteLine(target.GetType().Name); &#125;;</span><br><span class="line">Action&lt;Derived&gt; d = b;</span><br><span class="line">d(<span class="keyword">new</span> Derived());</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型等效性和嵌入的互操作类型"><a href="#类型等效性和嵌入的互操作类型" class="headerlink" title="类型等效性和嵌入的互操作类型"></a>类型等效性和嵌入的互操作类型</h3><p>目前理解成定义两个一样的类可以相互操作</p>
+<h2 id="C-5-0版-2012"><a href="#C-5-0版-2012" class="headerlink" title="C# 5.0版 - 2012"></a>C# 5.0版 - 2012</h2><h3 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> DamageResult <span class="title">CalculateDamageDone</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Code omitted:</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Does an expensive calculation and returns</span></span><br><span class="line">    <span class="comment">// the result of that calculation.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">calculateButton.Clicked += <span class="keyword">async</span> (o, e) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// This line will yield control to the UI while CalculateDamageDone()</span></span><br><span class="line">    <span class="comment">// performs its work.  The UI thread is free to perform other work.</span></span><br><span class="line">    <span class="keyword">var</span> damageResult = <span class="keyword">await</span> Task.Run(() =&gt; CalculateDamageDone());</span><br><span class="line">    DisplayDamage(damageResult);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="调用方信息"><a href="#调用方信息" class="headerlink" title="调用方信息"></a>调用方信息</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DoProcessing</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    TraceMessage(<span class="string">"Something happened."</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TraceMessage</span>(<span class="params"><span class="keyword">string</span> message,</span></span></span><br><span class="line"><span class="function"><span class="params">        [System.Runtime.CompilerServices.CallerMemberName] <span class="keyword">string</span> memberName = <span class="string">""</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        [System.Runtime.CompilerServices.CallerFilePath] <span class="keyword">string</span> sourceFilePath = <span class="string">""</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        [System.Runtime.CompilerServices.CallerLineNumber] <span class="keyword">int</span> sourceLineNumber = <span class="number">0</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    System.Diagnostics.Trace.WriteLine(<span class="string">"message: "</span> + message);</span><br><span class="line">    System.Diagnostics.Trace.WriteLine(<span class="string">"member name: "</span> + memberName);</span><br><span class="line">    System.Diagnostics.Trace.WriteLine(<span class="string">"source file path: "</span> + sourceFilePath);</span><br><span class="line">    System.Diagnostics.Trace.WriteLine(<span class="string">"source line number: "</span> + sourceLineNumber);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Sample Output:</span></span><br><span class="line"><span class="comment">//  message: Something happened.</span></span><br><span class="line"><span class="comment">//  member name: DoProcessing</span></span><br><span class="line"><span class="comment">//  source file path: c:\Visual Studio Projects\CallerInfoCS\CallerInfoCS\Form1.cs</span></span><br><span class="line"><span class="comment">//  source line number: 31</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="C-6-0版-2015"><a href="#C-6-0版-2015" class="headerlink" title="C# 6.0版 - 2015"></a>C# 6.0版 - 2015</h2><h3 id="静态导入"><a href="#静态导入" class="headerlink" title="静态导入"></a>静态导入</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">static</span> System.Math;</span><br></pre></td></tr></table></figure>
+
+<h3 id="异常筛选器"><a href="#异常筛选器" class="headerlink" title="异常筛选器"></a>异常筛选器</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="keyword">string</span>&gt; <span class="title">MakeRequest</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    WebRequestHandler webRequestHandler = <span class="keyword">new</span> WebRequestHandler();</span><br><span class="line">    webRequestHandler.AllowAutoRedirect = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">using</span> (HttpClient client = <span class="keyword">new</span> HttpClient(webRequestHandler))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> stringTask = client.GetStringAsync(<span class="string">"https://docs.microsoft.com/en-us/dotnet/about/"</span>);</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> responseText = <span class="keyword">await</span> stringTask;</span><br><span class="line">            <span class="keyword">return</span> responseText;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (System.Net.Http.HttpRequestException e) <span class="keyword">when</span> (e.Message.Contains(<span class="string">"301"</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"Site Moved"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自动初始化表达式"><a href="#自动初始化表达式" class="headerlink" title="自动初始化表达式"></a>自动初始化表达式</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> ICollection&lt;<span class="keyword">double</span>&gt; Grades &#123; <span class="keyword">get</span>; &#125; = <span class="keyword">new</span> List&lt;<span class="keyword">double</span>&gt;();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Expression-bodied-函数成员"><a href="#Expression-bodied-函数成员" class="headerlink" title="Expression-bodied 函数成员"></a>Expression-bodied 函数成员</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">string</span> <span class="title">ToString</span>(<span class="params"></span>)</span> =&gt; <span class="string">$"<span class="subst">&#123;LastName&#125;</span>, <span class="subst">&#123;FirstName&#125;</span>"</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Null传播器"><a href="#Null传播器" class="headerlink" title="Null传播器"></a>Null传播器</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> first = person?.FirstName;</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串内插"><a href="#字符串内插" class="headerlink" title="字符串内插"></a>字符串内插</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">GetGradePointPercentage</span>(<span class="params"></span>)</span> =&gt;</span><br><span class="line">    <span class="string">$"Name: <span class="subst">&#123;LastName&#125;</span>, <span class="subst">&#123;FirstName&#125;</span>. G.P.A: <span class="subst">&#123;Grades.Average():F2&#125;</span>"</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="nameof表达式"><a href="#nameof表达式" class="headerlink" title="nameof表达式"></a><code>nameof</code>表达式</h3><blockquote>
+<p>nameof 表达式的计算结果为符号的名称。 每当需要变量、属性或成员字段的名称时，这是让工具正常运行的好办法。 nameof 的其中一个最常见的用途是提供引起异常的符号的名称：</p>
+</blockquote>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (IsNullOrWhiteSpace(lastName))</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentException(message: <span class="string">"Cannot be blank"</span>, paramName: <span class="keyword">nameof</span>(lastName));</span><br></pre></td></tr></table></figure>
+
+<h3 id="索引初始值设定项"><a href="#索引初始值设定项" class="headerlink" title="索引初始值设定项"></a>索引初始值设定项</h3><blockquote>
+<p>使集合初始化更容易的另一个功能是对 Add 方法使用扩展方法 。 添加此功能的目的是进行 Visual Basic 的奇偶校验。 如果自定义集合类的方法具有通过语义方式添加新项的名称，则此功能非常有用。</p>
+</blockquote>
+<h2 id="C-7-0版-2017"><a href="#C-7-0版-2017" class="headerlink" title="C# 7.0版 - 2017"></a>C# 7.0版 - 2017</h2><h3 id="out变量"><a href="#out变量" class="headerlink" title="out变量"></a>out变量</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">int</span>.TryParse(input, <span class="keyword">out</span> <span class="keyword">int</span> result))</span><br><span class="line">    Console.WriteLine(result);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    Console.WriteLine(<span class="string">"Could not parse input"</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="元组和析构函数"><a href="#元组和析构函数" class="headerlink" title="元组和析构函数"></a>元组和析构函数</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">string</span> Alpha, <span class="keyword">string</span> Beta) namedLetters = (<span class="string">"a"</span>, <span class="string">"b"</span>);</span><br><span class="line">Console.WriteLine(<span class="string">$"<span class="subst">&#123;namedLetters.Alpha&#125;</span>, <span class="subst">&#123;namedLetters.Beta&#125;</span>"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>析构函数应该类似C++中的析构函数，在实例回收时执行？</p>
+<h3 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (input <span class="keyword">is</span> <span class="keyword">int</span> count)</span><br><span class="line">    sum += count;</span><br></pre></td></tr></table></figure>
+
+<h3 id="本地函数"><a href="#本地函数" class="headerlink" title="本地函数"></a>本地函数</h3><p>也可用lambda代替</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IEnumerable&lt;<span class="keyword">char</span>&gt; <span class="title">AlphabetSubset3</span>(<span class="params"><span class="keyword">char</span> start, <span class="keyword">char</span> end</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="string">'a'</span> || start &gt; <span class="string">'z'</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentOutOfRangeException(paramName: <span class="keyword">nameof</span>(start), message: <span class="string">"start must be a letter"</span>);</span><br><span class="line">    <span class="keyword">if</span> (end &lt; <span class="string">'a'</span> || end &gt; <span class="string">'z'</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentOutOfRangeException(paramName: <span class="keyword">nameof</span>(end), message: <span class="string">"end must be a letter"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (end &lt;= start)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentException(<span class="string">$"<span class="subst">&#123;<span class="keyword">nameof</span>(end)&#125;</span> must be greater than <span class="subst">&#123;<span class="keyword">nameof</span>(start)&#125;</span>"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> alphabetSubsetImplementation();</span><br><span class="line"></span><br><span class="line">    <span class="function">IEnumerable&lt;<span class="keyword">char</span>&gt; <span class="title">alphabetSubsetImplementation</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> c = start; c &lt; end; c++)</span><br><span class="line">            <span class="keyword">yield</span> <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="更多的expression-bodied成员"><a href="#更多的expression-bodied成员" class="headerlink" title="更多的expression-bodied成员"></a>更多的expression-bodied成员</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Expression-bodied constructor</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ExpressionMembersExample</span>(<span class="params"><span class="keyword">string</span> label</span>)</span> =&gt; <span class="keyword">this</span>.Label = label;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Expression-bodied finalizer</span></span><br><span class="line">~ExpressionMembersExample() =&gt; Console.Error.WriteLine(<span class="string">"Finalized!"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">string</span> label;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Expression-bodied get / set accessors.</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> Label</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span> =&gt; label;</span><br><span class="line">    <span class="keyword">set</span> =&gt; <span class="keyword">this</span>.label = <span class="keyword">value</span> ?? <span class="string">"Default label"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Ref-局部变量和返回结果"><a href="#Ref-局部变量和返回结果" class="headerlink" title="Ref 局部变量和返回结果"></a>Ref 局部变量和返回结果</h3><blockquote>
+<p>此功能允许使用并返回对变量的引用的算法，这些变量在其他位置定义。 一个示例是使用大型矩阵并查找具有某些特征的单个位置。 </p>
+</blockquote>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">ref</span> <span class="keyword">int</span> <span class="title">Find</span>(<span class="params"><span class="keyword">int</span>[,] matrix, Func&lt;<span class="keyword">int</span>, <span class="keyword">bool</span>&gt; predicate</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix.GetLength(<span class="number">0</span>); i++)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; matrix.GetLength(<span class="number">1</span>); j++)</span><br><span class="line">            <span class="keyword">if</span> (predicate(matrix[i, j]))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">ref</span> matrix[i, j];</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> InvalidOperationException(<span class="string">"Not found"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ref</span> <span class="keyword">var</span> item = <span class="keyword">ref</span> MatrixSearch.Find(matrix, (val) =&gt; val == <span class="number">42</span>);</span><br><span class="line">Console.WriteLine(item);</span><br><span class="line">item = <span class="number">24</span>;</span><br><span class="line">Console.WriteLine(matrix[<span class="number">4</span>, <span class="number">2</span>]);</span><br></pre></td></tr></table></figure>
+
+<h3 id="弃元"><a href="#弃元" class="headerlink" title="弃元"></a>弃元</h3><h3 id="二进制文本和数字分隔符"><a href="#二进制文本和数字分隔符" class="headerlink" title="二进制文本和数字分隔符"></a>二进制文本和数字分隔符</h3><h3 id="引发表达式"><a href="#引发表达式" class="headerlink" title="引发表达式"></a>引发表达式</h3><h2 id="C-8-0版-2019"><a href="#C-8-0版-2019" class="headerlink" title="C# 8.0版 - 2019"></a>C# 8.0版 - 2019</h2><h3 id="Readonly-成员"><a href="#Readonly-成员" class="headerlink" title="Readonly 成员"></a>Readonly 成员</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">readonly</span> <span class="keyword">override</span> <span class="keyword">string</span> <span class="title">ToString</span>(<span class="params"></span>)</span> =&gt;</span><br><span class="line">    <span class="string">$"(<span class="subst">&#123;X&#125;</span>, <span class="subst">&#123;Y&#125;</span>) is <span class="subst">&#123;Distance&#125;</span> from the origin"</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="默认接口方法"><a href="#默认接口方法" class="headerlink" title="默认接口方法"></a>默认接口方法</h3><h3 id="在更多位置中使用更多模式"><a href="#在更多位置中使用更多模式" class="headerlink" title="在更多位置中使用更多模式"></a>在更多位置中使用更多模式</h3><h4 id="switch表达式"><a href="#switch表达式" class="headerlink" title="switch表达式"></a>switch表达式</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> RGBColor <span class="title">FromRainbow</span>(<span class="params">Rainbow colorBand</span>)</span> =&gt;</span><br><span class="line">    colorBand <span class="keyword">switch</span></span><br><span class="line">    &#123;</span><br><span class="line">        Rainbow.Red    =&gt; <span class="keyword">new</span> RGBColor(<span class="number">0xFF</span>, <span class="number">0x00</span>, <span class="number">0x00</span>),</span><br><span class="line">        Rainbow.Orange =&gt; <span class="keyword">new</span> RGBColor(<span class="number">0xFF</span>, <span class="number">0x7F</span>, <span class="number">0x00</span>),</span><br><span class="line">        Rainbow.Yellow =&gt; <span class="keyword">new</span> RGBColor(<span class="number">0xFF</span>, <span class="number">0xFF</span>, <span class="number">0x00</span>),</span><br><span class="line">        Rainbow.Green  =&gt; <span class="keyword">new</span> RGBColor(<span class="number">0x00</span>, <span class="number">0xFF</span>, <span class="number">0x00</span>),</span><br><span class="line">        Rainbow.Blue   =&gt; <span class="keyword">new</span> RGBColor(<span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0xFF</span>),</span><br><span class="line">        Rainbow.Indigo =&gt; <span class="keyword">new</span> RGBColor(<span class="number">0x4B</span>, <span class="number">0x00</span>, <span class="number">0x82</span>),</span><br><span class="line">        Rainbow.Violet =&gt; <span class="keyword">new</span> RGBColor(<span class="number">0x94</span>, <span class="number">0x00</span>, <span class="number">0xD3</span>),</span><br><span class="line">        _              =&gt; <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentException(message: <span class="string">"invalid enum value"</span>, paramName: <span class="keyword">nameof</span>(colorBand)),</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="属性模式"><a href="#属性模式" class="headerlink" title="属性模式"></a>属性模式</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">decimal</span> <span class="title">ComputeSalesTax</span>(<span class="params">Address location, <span class="keyword">decimal</span> salePrice</span>)</span> =&gt;</span><br><span class="line">    location <span class="keyword">switch</span></span><br><span class="line">    &#123;</span><br><span class="line">        &#123; State: <span class="string">"WA"</span> &#125; =&gt; salePrice * <span class="number">0.06</span>M,</span><br><span class="line">        &#123; State: <span class="string">"MN"</span> &#125; =&gt; salePrice * <span class="number">0.75</span>M,</span><br><span class="line">        &#123; State: <span class="string">"MI"</span> &#125; =&gt; salePrice * <span class="number">0.05</span>M,</span><br><span class="line">        <span class="comment">// other cases removed for brevity...</span></span><br><span class="line">        _ =&gt; <span class="number">0</span>M</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="元组模式"><a href="#元组模式" class="headerlink" title="元组模式"></a>元组模式</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">RockPaperScissors</span>(<span class="params"><span class="keyword">string</span> first, <span class="keyword">string</span> second</span>)</span></span><br><span class="line"><span class="function"></span>    =&gt; (first, second) <span class="keyword">switch</span></span><br><span class="line">    &#123;</span><br><span class="line">        (<span class="string">"rock"</span>, <span class="string">"paper"</span>) =&gt; <span class="string">"rock is covered by paper. Paper wins."</span>,</span><br><span class="line">        (<span class="string">"rock"</span>, <span class="string">"scissors"</span>) =&gt; <span class="string">"rock breaks scissors. Rock wins."</span>,</span><br><span class="line">        (<span class="string">"paper"</span>, <span class="string">"rock"</span>) =&gt; <span class="string">"paper covers rock. Paper wins."</span>,</span><br><span class="line">        (<span class="string">"paper"</span>, <span class="string">"scissors"</span>) =&gt; <span class="string">"paper is cut by scissors. Scissors wins."</span>,</span><br><span class="line">        (<span class="string">"scissors"</span>, <span class="string">"rock"</span>) =&gt; <span class="string">"scissors is broken by rock. Rock wins."</span>,</span><br><span class="line">        (<span class="string">"scissors"</span>, <span class="string">"paper"</span>) =&gt; <span class="string">"scissors cuts paper. Scissors wins."</span>,</span><br><span class="line">        (_, _) =&gt; <span class="string">"tie"</span></span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="位置模式"><a href="#位置模式" class="headerlink" title="位置模式"></a>位置模式</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> Quadrant <span class="title">GetQuadrant</span>(<span class="params">Point point</span>)</span> =&gt; point <span class="keyword">switch</span></span><br><span class="line">&#123;</span><br><span class="line">    (<span class="number">0</span>, <span class="number">0</span>) =&gt; Quadrant.Origin,</span><br><span class="line">    <span class="keyword">var</span> (x, y) <span class="keyword">when</span> x &gt; <span class="number">0</span> &amp;&amp; y &gt; <span class="number">0</span> =&gt; Quadrant.One,</span><br><span class="line">    <span class="keyword">var</span> (x, y) <span class="keyword">when</span> x &lt; <span class="number">0</span> &amp;&amp; y &gt; <span class="number">0</span> =&gt; Quadrant.Two,</span><br><span class="line">    <span class="keyword">var</span> (x, y) <span class="keyword">when</span> x &lt; <span class="number">0</span> &amp;&amp; y &lt; <span class="number">0</span> =&gt; Quadrant.Three,</span><br><span class="line">    <span class="keyword">var</span> (x, y) <span class="keyword">when</span> x &gt; <span class="number">0</span> &amp;&amp; y &lt; <span class="number">0</span> =&gt; Quadrant.Four,</span><br><span class="line">    <span class="keyword">var</span> (_, _) =&gt; Quadrant.OnBorder,</span><br><span class="line">    _ =&gt; Quadrant.Unknown</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="using声明"><a href="#using声明" class="headerlink" title="using声明"></a>using声明</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">WriteLinesToFile</span>(<span class="params">IEnumerable&lt;<span class="keyword">string</span>&gt; lines</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">var</span> file = <span class="keyword">new</span> System.IO.StreamWriter(<span class="string">"WriteLines2.txt"</span>);</span><br><span class="line">    <span class="comment">// Notice how we declare skippedLines after the using statement.</span></span><br><span class="line">    <span class="keyword">int</span> skippedLines = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">string</span> line <span class="keyword">in</span> lines)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!line.Contains(<span class="string">"Second"</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            file.WriteLine(line);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            skippedLines++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Notice how skippedLines is in scope here.</span></span><br><span class="line">    <span class="keyword">return</span> skippedLines;</span><br><span class="line">    <span class="comment">// file is disposed here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="静态本地函数"><a href="#静态本地函数" class="headerlink" title="静态本地函数"></a>静态本地函数</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">M</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> y = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">7</span>;</span><br><span class="line">    <span class="keyword">return</span> Add(x, y);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Add</span>(<span class="params"><span class="keyword">int</span> left, <span class="keyword">int</span> right</span>)</span> =&gt; left + right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="异步流"><a href="#异步流" class="headerlink" title="异步流"></a>异步流</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> System.Collections.Generic.<span class="function">IAsyncEnumerable&lt;<span class="keyword">int</span>&gt; <span class="title">GenerateSequence</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">await</span> Task.Delay(<span class="number">100</span>);</span><br><span class="line">        <span class="keyword">yield</span> <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="索引和范围"><a href="#索引和范围" class="headerlink" title="索引和范围"></a>索引和范围</h3><p>感觉类似python中的切片器，<code>-</code>用<code>^</code>代替了</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> words = <span class="keyword">new</span> <span class="keyword">string</span>[]</span><br><span class="line">&#123;</span><br><span class="line">                <span class="comment">// index from start    index from end</span></span><br><span class="line">    <span class="string">"The"</span>,      <span class="comment">// 0                   ^9</span></span><br><span class="line">    <span class="string">"quick"</span>,    <span class="comment">// 1                   ^8</span></span><br><span class="line">    <span class="string">"brown"</span>,    <span class="comment">// 2                   ^7</span></span><br><span class="line">    <span class="string">"fox"</span>,      <span class="comment">// 3                   ^6</span></span><br><span class="line">    <span class="string">"jumped"</span>,   <span class="comment">// 4                   ^5</span></span><br><span class="line">    <span class="string">"over"</span>,     <span class="comment">// 5                   ^4</span></span><br><span class="line">    <span class="string">"the"</span>,      <span class="comment">// 6                   ^3</span></span><br><span class="line">    <span class="string">"lazy"</span>,     <span class="comment">// 7                   ^2</span></span><br><span class="line">    <span class="string">"dog"</span>       <span class="comment">// 8                   ^1</span></span><br><span class="line">&#125;;              <span class="comment">// 9 (or words.Length) ^0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> quickBrownFox = words[<span class="number">1.</span><span class="number">.4</span>];</span><br><span class="line"><span class="keyword">var</span> lazyDog = words[^<span class="number">2.</span>.^<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> allWords = words[..]; <span class="comment">// contains "The" through "dog".</span></span><br><span class="line"><span class="keyword">var</span> firstPhrase = words[.<span class="number">.4</span>]; <span class="comment">// contains "The" through "fox"</span></span><br><span class="line"><span class="keyword">var</span> lastPhrase = words[<span class="number">6.</span>.]; <span class="comment">// contains "the", "lazy" and "dog"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Null合并赋值"><a href="#Null合并赋值" class="headerlink" title="Null合并赋值"></a>Null合并赋值</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">List&lt;<span class="keyword">int</span>&gt; numbers = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">int</span>? i = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">numbers ??= <span class="keyword">new</span> List&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line">numbers.Add(i ??= <span class="number">17</span>);</span><br><span class="line">numbers.Add(i ??= <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="keyword">string</span>.Join(<span class="string">" "</span>, numbers));  <span class="comment">// output: 17 17</span></span><br><span class="line">Console.WriteLine(i);  <span class="comment">// output: 17</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="非托管构造类型"><a href="#非托管构造类型" class="headerlink" title="非托管构造类型"></a>非托管构造类型</h3><blockquote>
+<p>与任何非托管类型一样，可以创建指向此类型的变量的指针，或针对此类型的实例在堆栈上分配内存块</p>
+</blockquote>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Span&lt;Coords&lt;<span class="keyword">int</span>&gt;&gt; coordinates = <span class="keyword">stackalloc</span>[]</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">new</span> Coords&lt;<span class="keyword">int</span>&gt; &#123; X = <span class="number">0</span>, Y = <span class="number">0</span> &#125;,</span><br><span class="line">    <span class="keyword">new</span> Coords&lt;<span class="keyword">int</span>&gt; &#123; X = <span class="number">0</span>, Y = <span class="number">3</span> &#125;,</span><br><span class="line">    <span class="keyword">new</span> Coords&lt;<span class="keyword">int</span>&gt; &#123; X = <span class="number">4</span>, Y = <span class="number">0</span> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="嵌套表达式中的-stackalloc"><a href="#嵌套表达式中的-stackalloc" class="headerlink" title="嵌套表达式中的 stackalloc"></a>嵌套表达式中的 stackalloc</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Span&lt;<span class="keyword">int</span>&gt; numbers = <span class="keyword">stackalloc</span>[] &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> ind = numbers.IndexOfAny(<span class="keyword">stackalloc</span>[] &#123; <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span> ,<span class="number">8</span> &#125;);</span><br><span class="line">Console.WriteLine(ind);  <span class="comment">// output: 1</span></span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>Akiya Xiao</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>本文链接:</span>
+                        <span><a href="https://akiyax.github.io/new-features-in-csharp/">https://akiyax.github.io/new-features-in-csharp/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>版权声明:</span>
+                        <span>© 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE <strong>转载请附上原文出处链接和本声明</strong></span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/net/">
+                            <i class="iconfont icon-tag1"></i>
+                            .net
+                        </a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="/">
+                    <i class="iconfont icon-home"></i>
+                    主页
+                </a>
+                <span>· </span>
+                <a href="javascript:window.history.back();">
+                    <i class="iconfont icon-back"></i>
+                    返回
+                </a>
+                
+                
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/csharp-design-pattern/">C# 设计模式导览</a>
+            
+            
+            <a class="next" rel="next" href="/my-new-blog/">我的新博客</a>
+            
+        </section>
+        <br>
+        
+            <section id="comments" class="comments">
+              <style>
+                  .comments{ margin-top: 30px;}
+                  .v .vlist .vcard .vcontent {padding-top: 0;}
+                  .vcontent p { color:grey; margin-bottom: 10px;}
+                  .v * {line-height: normal;}
+                  .v .vwrap  {border-radius: 0px; padding: 10px;}
+                  .v .vbtn {border-radius: 0px;}
+                  .v code, .v pre {border-radius: 0px;}
+                  .v .vlist .vcard .vhead .vsys {border-radius: 1px; padding: 2px;}
+                  .v .vlist .vcard .vhead .vnick {color: #2d96bd;}
+                  .v .vlist .vcard .vh .vmeta .vat{color: #c7254e;}
+                  .v .vlist .vcard {padding-top: 0;}
+                  .v .vlist .vcard .vimg { width: 2.5em; height: 2.5em; }
+                  .v .vlist .vcard .vquote .vimg { width: 2.5em; height: 2.5em; }
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '.valine_comment',
+        app_id: 'baahrwTTyOayDYUv5AtkdGJj-gzGzoHsz',
+        app_key: 'iTfzn8X60g9v0zTtnvToc09l',
+        placeholder: '想对作者说点什么...',
+        notify: 'false',
+        verify: 'false',
+        avatar: 'retro',
+        visitor: 'true'
+    });
+</script>
+            </section>
+        
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Akiya Xiao | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
