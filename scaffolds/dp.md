@@ -15,11 +15,13 @@ id:
 
 # 结构与实现
 
+```
 {% plantuml %}
 
     !includeurl https://raw.githubusercontent.com/AkiyaX/AkiyaX.github.io/hexo/theme.puml  
 
 {% endplantuml %}
+```
 
 # 优缺点
 
