@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Akiya Xiao">
+
+
+    <meta name="subtitle" content="Akiya Xiao's blog">
+
+
+    <meta name="description" content="Do one thing and do well !">
+
+
+
+<title>2021学习计划 | 青龙指引你</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1614813_fp9wxdcpr9c.css"
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Akiya&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">
+                        
+                            <i class="iconfont icon-archives "></i>
+                        
+                        
+                        
+                        
+                        文章
+                    </a>
+                
+                    <a class="menu-item" href="/category">
+                        
+                        
+                            <i class="iconfont icon-categorys "></i>
+                        
+                        
+                        
+                        分类
+                    </a>
+                
+                    <a class="menu-item" href="/tag">
+                        
+                        
+                        
+                            <i class="iconfont icon-tags "></i>
+                        
+                        
+                        标签
+                    </a>
+                
+                    <a class="menu-item" href="/about">
+                        
+                        
+                        
+                        
+                            <i class="iconfont icon-about "></i>
+                        
+                        关于
+                    </a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Akiya&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">
+                        
+                            <i class="iconfont icon-archives "></i>
+                        
+                        
+                        
+                        
+                        文章
+                    </a>
+                
+                    <a class="menu-item" href="/category">
+                        
+                        
+                            <i class="iconfont icon-categorys "></i>
+                        
+                        
+                        
+                        分类
+                    </a>
+                
+                    <a class="menu-item" href="/tag">
+                        
+                        
+                        
+                            <i class="iconfont icon-tags "></i>
+                        
+                        
+                        标签
+                    </a>
+                
+                    <a class="menu-item" href="/about">
+                        
+                        
+                        
+                        
+                            <i class="iconfont icon-about "></i>
+                        
+                        关于
+                    </a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">▶︎ 展开目录</a>
+    </div>
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a onclick="go_top()">△ 顶部</a>
+        <a onclick="go_bottom()">▽ 底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "▼ 收起目录"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "▶︎ 展开目录"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2021学习计划</h1>
+            
+                <div class="post-meta">
+                    
+                        <!--作者:-->
+                        <i class="iconfont icon-user"></i>
+                        <a itemprop="author" rel="author" href="/">Akiya Xiao </a> &nbsp;
+                    
+
+                    
+                        <span class="post-time">
+                        <!--发布时间:-->
+                        <i class="iconfont icon-time"></i>
+                        <a href="#">2021-02-25&nbsp;&nbsp;14:11:51</a> &nbsp;
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        <!--分类:-->
+                        <i class="iconfont icon-category"></i>
+                            
+                                <a href="/categories/%E8%AE%B0%E5%BD%95/">记录</a>&nbsp;
+                            
+                        </span>
+                    
+                    
+                    <span id="/2021-learing-plan/" class="leancloud-visitors view" data-flag-title="2021学习计划">
+                        <text class="post-meta-item-text">
+                            <!--阅读数:-->
+                            <i class="iconfont icon-view"></i>
+                        </text>
+                        
+                        <text class="leancloud-visitors-count">加载中</text>
+                      </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>看了公司出的员工画像，原来去年一年总共只提交了1305行代码，也就是平均每个工作日不到5行（在Github提交的代码都不止这么点）。实在是太摸了，这样下去是不行的。</p>
+<p>于是，决定制定一个学习/实践计划，希望今年可以有所成长吧。</p>
+<h2 id="业余爱好"><a href="#业余爱好" class="headerlink" title="业余爱好"></a>业余爱好</h2><p>首先是StarExpert这个UWP应用，从去年11月就开始做了，没想到到现在只有一个页面能用（而且数据还不准），今年是一定要完成了。</p>
+<ul>
+<li><input disabled="" type="checkbox"> 3月完成详情页所有数据和页面</li>
+<li><input disabled="" type="checkbox"> 4月发布至应用商店</li>
+<li><input disabled="" type="checkbox"> 5月收集完所有部件的数据</li>
+<li><input disabled="" type="checkbox"> 6月完成所有部件的页面</li>
+<li><input disabled="" type="checkbox"> 7月收集装备的数据</li>
+<li><input disabled="" type="checkbox"> 8月完成所有装备的页面</li>
+<li><input disabled="" type="checkbox"> 9月完成购物车功能</li>
+</ul>
+<h2 id="岗位相关"><a href="#岗位相关" class="headerlink" title="岗位相关"></a>岗位相关</h2><p>然后是与目前岗位比较相关的内容，主要包含</p>
+<ul>
+<li>语言基础</li>
+<li>设计模式</li>
+<li>前端开发</li>
+</ul>
+<p>语言基础还是不够牢固，接下来需要总结学习委托、扩展方法、异步等</p>
+<ul>
+<li><input disabled="" type="checkbox"> 计划输出4篇博客，在4月完成</li>
+</ul>
+<p>设计模式从去年3月开始写，竟然写了一年才写了6个，太棒了啊💔</p>
+<p>考虑到不是每个模式都值得写博客，计划输出10篇博客，每月完成1篇</p>
+<ul>
+<li><input disabled="" type="checkbox"> 3月</li>
+<li><input disabled="" type="checkbox"> 4月</li>
+<li><input disabled="" type="checkbox"> 5月</li>
+<li><input disabled="" type="checkbox"> 6月</li>
+<li><input disabled="" type="checkbox"> 7月</li>
+<li><input disabled="" type="checkbox"> 8月</li>
+<li><input disabled="" type="checkbox"> 9月</li>
+<li><input disabled="" type="checkbox"> 10月</li>
+<li><input disabled="" type="checkbox"> 11月</li>
+<li><input disabled="" type="checkbox"> 12月</li>
+</ul>
+<p>前端开发的话，学习公司在使用的React，能独立完成一个项目，使用公司的组件和开发规范。</p>
+<ul>
+<li><input disabled="" type="checkbox"> 在5月完成</li>
+</ul>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>为未来做一些准备：</p>
+<ul>
+<li><input disabled="" type="checkbox"> LeetCode刷100道题(17/117)</li>
+<li><input disabled="" type="checkbox"> Linux学习输出至少1篇博客</li>
+<li><input disabled="" type="checkbox"> 分布式技术学习输出至少1篇博客</li>
+<li><input disabled="" type="checkbox"> Docker学习实践</li>
+<li><input disabled="" type="checkbox"> Kafka、ZooKeeper学习实践</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>Akiya Xiao</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>本文链接:</span>
+                        <span><a href="https://akiyax.github.io/2021-learing-plan/">https://akiyax.github.io/2021-learing-plan/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>版权声明:</span>
+                        <span>© 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE <strong>转载请附上原文出处链接和本声明</strong></span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="/">
+                    <i class="iconfont icon-home"></i>
+                    主页
+                </a>
+                <span>· </span>
+                <a href="javascript:window.history.back();">
+                    <i class="iconfont icon-back"></i>
+                    返回
+                </a>
+                
+                
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/singleton-pattern/">C#设计模式[6] - 单例模式</a>
+            
+        </section>
+        <br>
+        
+            <section id="comments" class="comments">
+              <style>
+                  .comments{ margin-top: 30px;}
+                  .v .vlist .vcard .vcontent {padding-top: 0;}
+                  .vcontent p { color:grey; margin-bottom: 10px;}
+                  .v * {line-height: normal;}
+                  .v .vwrap  {border-radius: 0px; padding: 10px;}
+                  .v .vbtn {border-radius: 0px;}
+                  .v code, .v pre {border-radius: 0px;}
+                  .v .vlist .vcard .vhead .vsys {border-radius: 1px; padding: 2px;}
+                  .v .vlist .vcard .vhead .vnick {color: #2d96bd;}
+                  .v .vlist .vcard .vh .vmeta .vat{color: #c7254e;}
+                  .v .vlist .vcard {padding-top: 0;}
+                  .v .vlist .vcard .vimg { width: 2.5em; height: 2.5em; }
+                  .v .vlist .vcard .vquote .vimg { width: 2.5em; height: 2.5em; }
+              </style>
+              <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '.valine_comment',
+        app_id: 'baahrwTTyOayDYUv5AtkdGJj-gzGzoHsz',
+        app_key: 'iTfzn8X60g9v0zTtnvToc09l',
+        placeholder: '想对作者说点什么...',
+        notify: 'false',
+        verify: 'false',
+        avatar: 'retro',
+        visitor: 'true'
+    });
+</script>
+            </section>
+        
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Akiya Xiao | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
